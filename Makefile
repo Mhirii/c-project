@@ -19,4 +19,7 @@ clean:
 	rm -f bin/$(TARGET)
 	rmdir bin
 
+run: $(TARGET)
+	./bin/$(TARGET)
+
 .PHONY: all clean
