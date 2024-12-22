@@ -27,19 +27,15 @@ The Inventory Management System is designed to help businesses manage their inve
    - Monitor the quantity of each item in stock.
    - Alert when items are low in stock based on predefined reorder levels.
 
-3. **Generate Inventory Reports**
-   - Create reports showing current stock levels, low stock items, and inventory value.
-   - Generate periodic reports (e.g., weekly, monthly) for inventory analysis.
-
-4. **Read Config File for Settings**
+3. **Read Config File for Settings**
    - Load settings from a config file, such as reorder levels, supplier details, and report generation frequency.
    - Adjust system behavior based on config file parameters.
 
-5. **Supplier Management**
+4. **Supplier Management**
    - Store and manage supplier information.
    - Link inventory items to their respective suppliers.
 
-6. **Order Management**
+5. **Order Management**
    - Create and manage purchase orders for restocking items.
    - Track order status and update inventory upon order receipt.
 
@@ -63,7 +59,3 @@ The Inventory Management System is designed to help businesses manage their inve
 
 5. **Config File Handling**
    - Implement file I/O to read settings from a config file.
-
----
-
-Does this look good to you? 😊
