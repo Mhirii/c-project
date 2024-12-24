@@ -157,11 +157,10 @@ char get_operation() {
 
   char input = getch();
   clear_screen();
-  printf("%c", input);
   return input;
 }
 
-void print_item_formatted(struct Item *item) {
+void show_item(struct Item *item) {
   const char SPACING = 16;
   const int MAX_WIDTH = 11 + SPACING + get_max_length(item);
 
@@ -191,20 +190,6 @@ void print_item_formatted(struct Item *item) {
 
   for (int i = 0; i < MAX_WIDTH / 2; i++)
     printf("==");
-
-  char op = get_operation();
-  switch (op) {
-  case 'a':
-    return;
-  case 'e':
-    printf("Edit");
-    return;
-  case 'd':
-    printf("Delete");
-    return;
-  default:
-    return;
-  }
 }
 
 struct Item *get_user_input_for_item() {
@@ -230,6 +215,28 @@ struct Item *get_user_input_for_item() {
   description[strcspn(description, "\n")] =
       0; // Remove the newline character // Create and return the new item
   struct Item *new_item = create_item(ID, quantity, price, name, description);
-  print_item_formatted(new_item);
+  show_item(new_item);
+
+  char op = get_operation();
+  switch (op) {
+  case 'a':
+    print_message(
+        "Item added successfully, with id = %d, quantity = %d, name = %s, "
+        "description,  %s, price = %.2f   and ID = %d, lorem ipsum dolor sit "
+        "amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt "
+        "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis "
+        "nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo "
+        "consequat. Duis aute irure dolor in reprehenderit in voluptate velit "
+        "esse ci");
+    return new_item;
+  case 'e':
+    printf("Edit");
+    return new_item;
+  case 'd':
+    printf("Delete");
+    return new_item;
+  default:
+    return new_item;
+  }
   return new_item;
 }

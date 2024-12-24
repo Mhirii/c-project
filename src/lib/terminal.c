@@ -1,4 +1,5 @@
 #include "terminal.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -69,12 +70,98 @@ void print_bottom_message(const char *message) {
   printf("%s", message);
 }
 
-int confirm_quit() {
-  char input[5];
-  printf("Type 'quit' to confirm: ");
-  fgets(input, 5, stdin);
-  if (strncmp(input, "quit", 4) == 0) {
-    return 1;
+void print_border(int start_row, int start_col, int width) {
+  move_cursor(start_row, start_col);
+  for (int i = 0; i < width; i++) {
+    printf("=");
+  }
+  printf("\n");
+}
+
+int calculate_max_line_length(const char *message, int len, int max_width) {
+  int max_line_len = 0;
+  for (int i = 0; i < len; i += max_width) {
+    int line_len = 0;
+    for (int j = 0; j < max_width && (i + j) < len; j++) {
+      line_len++;
+    }
+    if (line_len > max_line_len) {
+      max_line_len = line_len;
+    }
+  }
+  return max_line_len;
+}
+
+void print_message_line(const char *message, int start_row, int start_col,
+                        int i, int max_width, int len, int max_line_len) {
+  int line_len = 0;
+  for (int j = 0; j < max_width && (i + j) < len; j++) {
+    line_len++;
+  }
+
+  move_cursor(start_row + 1 + (i / max_width), start_col);
+  printf("  "); // Left padding (2 spaces)
+  for (int j = 0; j < max_width && (i + j) < len; j++) {
+    printf("%c", message[i + j]);
+  }
+
+  for (int j = line_len; j < max_line_len; j++) {
+    printf(" ");
+  }
+  printf("  \n");
+}
+
+int get_yn_response(int start_row, int start_col) {
+  move_cursor(start_row, start_col);
+  printf("Enter [%s]es or [%s]o: ", colorize("Y", GREEN), colorize("N", RED));
+  char response;
+  do {
+    response = toupper(getch());
+  } while (response != 'Y' && response != 'N');
+  if (response == 'Y') {
+    printf("%s\n", colorize("Y", GREEN));
+  } else {
+    printf("%s\n", colorize("N", RED));
+  }
+
+  return response == 'Y';
+}
+
+int print_message_with_prompt(const char *message, int prompt_yn) {
+  struct winsize w;
+  ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+  const char MARGIN = 30;
+
+  int max_width = w.ws_col - MARGIN;
+  int len = strlen(message);
+  int lines = (len + max_width - 1) / max_width;
+
+  int max_line_len = calculate_max_line_length(message, len, max_width);
+  int start_row = (w.ws_row - lines - 2) / 2;
+  int border_width = max_line_len + 4;
+  int start_col = (w.ws_col - border_width) / 2;
+
+  print_border(start_row, start_col, border_width);
+
+  for (int i = 0; i < len; i += max_width) {
+    print_message_line(message, start_row, start_col, i, max_width, len,
+                       max_line_len);
+  }
+
+  print_border(start_row + lines + 1, start_col, border_width);
+
+  if (prompt_yn) {
+    return get_yn_response(start_row + lines + 2, (w.ws_col - 30) / 2);
+  } else {
+    getch();
   }
   return 0;
+}
+
+void print_message(const char *message) {
+  print_message_with_prompt(message, 0);
+}
+
+int confirm_quit() {
+  return print_message_with_prompt("Are you sure you want to quit?", 1);
 }

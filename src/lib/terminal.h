@@ -9,5 +9,6 @@ void clear_screen();
 void move_cursor(int row, int col);
 void print_menu(char **options);
 void print_bottom_message(const char *message);
+void print_message(const char *message);
 
 #endif

@@ -39,14 +39,17 @@ int main() {
       case '2':
         printf("Add Item");
         get_user_input_for_item();
-        scanf("%d", &choice);
         break;
       case '3':
         printf("Preferences\n");
         break;
       case '0':
+        exit = 1;
         break;
       case 'q':
+        exit = 1;
+        break;
+      case 27:
         exit = 1;
         break;
       default:
@@ -61,19 +64,24 @@ int main() {
       printf("Preferences\n");
       break;
     case '0':
-      exit = 1;
+      if (confirm_quit())
+        exit = 1;
       break;
     case 'q':
       if (confirm_quit())
         exit = 1;
       break;
+    case 27:
+      if (confirm_quit())
+        exit = 1;
+      break;
+
     default:
       printf("Invalid choice\n");
       break;
     }
   }
 
-  print_item(item);
   delete_inventory(inventory);
   return EXIT_SUCCESS;
 }
