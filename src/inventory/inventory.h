@@ -18,6 +18,4 @@ struct Item *add_item(struct Inventory *inventory, int quantity, float price, ch
 struct Item *get_item_by_id(struct Inventory *inventory, int ID);
 void remove_item(struct Inventory *inventory, int ID);
 
-void inventory_menu(struct Inventory *inventory);
-
 #endif

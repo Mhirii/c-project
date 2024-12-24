@@ -149,8 +149,7 @@ void print_wrapped_description(const char *description, int max_width,
 }
 
 char get_operation() {
-
-  char *msg;
+  char msg[100];
   sprintf(msg, "[%sA%s]ccept   [%sE%s]dit   [%sD%s]elete", ACCENT, RESET,
           ACCENT, RESET, ACCENT, RESET);
   print_bottom_message(msg);

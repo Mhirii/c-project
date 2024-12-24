@@ -46,13 +46,13 @@ void move_cursor(int row, int col) {
   printf("\033[%d;%dH", row, col); // ANSI escape code to move the cursor
 }
 
-void print_menu(char **options) {
+void print_menu(char **options, char *exit_msg) {
   int i = 0;
   while (options[i] != NULL) {
     printf("%s\n", format_option(i + 1, options[i], CYAN));
     i++;
   }
-  printf("%s\n", format_option(0, "exit", RED));
+  printf("%s\n", format_option(0, exit_msg, RED));
 }
 
 void main_menu() {
@@ -60,7 +60,7 @@ void main_menu() {
   clear_screen();
   move_cursor(1, 1);
   printf("Please enter your choice:\n");
-  print_menu(options);
+  print_menu(options, "Exit");
 }
 
 void print_bottom_message(const char *message) {

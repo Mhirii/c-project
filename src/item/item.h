@@ -13,4 +13,6 @@ struct Item {
 struct Item *create_item(int ID, int quantity, float price, char *name, char *description );
 char* delete_item(struct Item *item);
 
+struct Item *get_user_input_for_item();
+
 #endif

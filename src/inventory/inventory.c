@@ -128,37 +128,3 @@ void remove_item(struct Inventory *inventory, int ID) {
       "Could not remove item from inventory because it was not found");
   log_error(error);
 }
-
-void inventory_menu(struct Inventory *inventory) {
-  int choice = 0;
-  while (choice != 0) {
-    printf("Item Management\n");
-    clear_screen();
-    move_cursor(1, 1);
-
-    printf("Please enter your choice:\n");
-    print_option(1, "Show Items");
-    print_option(2, "Add Item");
-    print_option(3, "Find Item");
-    printf("%s\n", format_option(0, "exit", RED));
-    choice = getch() - '0';
-    switch (choice) {
-    case 1:
-      printf("Show items");
-      break;
-    case 2:
-      printf("Show Items");
-      break;
-    case 3:
-      printf("Preferences\n");
-      break;
-    case 0:
-      break;
-    default:
-      printf("Invalid choice\n");
-      break;
-    }
-    print_bottom_message("Press any key to continue...");
-    getch();
-  }
-}
