@@ -7,7 +7,7 @@ void print_option(int num, char *msg);
 int getch(void);
 void clear_screen();
 void move_cursor(int row, int col);
-void print_menu();
+void print_menu(char **options);
 void print_bottom_message(const char *message);
 
 #endif

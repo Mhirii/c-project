@@ -19,51 +19,58 @@ int main() {
 
   int exit = 0;
   while (!exit) {
-    print_menu();
-    int choice =
-        getch() - '0'; // Read a single character and convert it to an integer
+    main_menu();
+    int choice = getch();
     clear_screen();
     move_cursor(1, 1);
     switch (choice) {
-    case 1:
+    case '1':
       printf("Please enter your choice:\n");
-      print_option(1, "Show Items");
-      print_option(2, "Add Item");
-      print_option(3, "Find Item");
-      printf("%s\n", format_option(0, "exit", RED));
-      int inv_choice = getch() - '0';
+
+      char *options[] = {"Show Items", "Add Item", "Find Item", NULL};
+      move_cursor(1, 1);
+      printf("Please enter your choice:\n");
+      print_menu(options);
+      int inv_choice = getch();
       switch (inv_choice) {
-      case 1:
+      case '1':
         printf("Show items");
         break;
-      case 2:
-        printf("Show Items");
+      case '2':
+        printf("Add Item");
+        get_user_input_for_item();
+        scanf("%d", &choice);
         break;
-      case 3:
+      case '3':
         printf("Preferences\n");
         break;
-      case 0:
+      case '0':
+        break;
+      case 'q':
+        exit = 1;
         break;
       default:
         printf("Invalid choice\n");
         break;
       }
       break;
-    case 2:
+    case '2':
       printf("Supplier Management\n");
       break;
-    case 3:
+    case '3':
       printf("Preferences\n");
       break;
-    case 0:
+    case '0':
       exit = 1;
+      break;
+    case 'q':
+      if (confirm_quit())
+        exit = 1;
       break;
     default:
       printf("Invalid choice\n");
       break;
     }
-    print_bottom_message("Press any key to continue...");
-    getch(); // Wait for user input before continuing
   }
 
   print_item(item);
