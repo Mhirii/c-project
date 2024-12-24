@@ -6,7 +6,7 @@ const char *LOG_TYPES[] = {"INFO ", "WARN ", "ERROR", "DEBUG"};
 const char *LOG_COLORS[] = {"\033[32mINFO\033[0m ", "\033[33mWARN\033[0m ",
                             "\033[31mERROR\033[0m", "\033[36mDEBUG\033[0m"};
 
-time_t getTime() {
+time_t get_time() {
   time_t rawtime;
   struct tm *timeinfo;
   if (time(&rawtime) == -1) {
@@ -23,7 +23,7 @@ time_t getTime() {
   return result;
 }
 
-char *timeToString(time_t time) {
+char *time_to_string(time_t time) {
   struct tm *timeinfo = localtime(&time);
   if (timeinfo == NULL) {
     return NULL;
@@ -41,7 +41,7 @@ char *timeToString(time_t time) {
   return timeStr;
 }
 
-struct Log *createLog(enum LogType type, char *message) {
+struct Log *create_log(enum LogType type, char *message) {
   if (message == NULL) {
     return NULL;
   }
@@ -51,12 +51,12 @@ struct Log *createLog(enum LogType type, char *message) {
     return NULL;
   }
 
-  time_t time_now = getTime();
+  time_t time_now = get_time();
   if (time_now == -1) {
     free(log);
     return NULL;
   }
-  char *timestamp = timeToString(time_now);
+  char *timestamp = time_to_string(time_now);
 
   log->timestamp = timestamp;
   log->message = message;
@@ -64,18 +64,22 @@ struct Log *createLog(enum LogType type, char *message) {
   return log;
 };
 
-struct Log *CreateErrorLog(char *message) { return createLog(ERROR, message); }
+struct Log *create_error_log(char *message) {
+  return create_log(ERROR, message);
+}
 
-struct Log *CreateInfoLog(char *message) { return createLog(INFO, message); }
-void Info(char *message) { PrintLog(CreateInfoLog(message)); }
+struct Log *create_info_log(char *message) { return create_log(INFO, message); }
+void Info(char *message) { print_log(create_info_log(message)); }
 
-struct Log *CreateWarnLog(char *message) { return createLog(WARN, message); }
-void Warn(char *message) { PrintLog(CreateWarnLog(message)); }
+struct Log *create_warn_log(char *message) { return create_log(WARN, message); }
+void Warn(char *message) { print_log(create_warn_log(message)); }
 
-struct Log *CreateDebugLog(char *message) { return createLog(DEBUG, message); }
-void Debug(char *message) { PrintLog(CreateDebugLog(message)); }
+struct Log *create_debug_log(char *message) {
+  return create_log(DEBUG, message);
+}
+void debug(char *message) { print_log(create_debug_log(message)); }
 
-void PrintLog(struct Log *log) {
+void print_log(struct Log *log) {
   if (log == NULL) {
     return;
   }

@@ -1,37 +1,22 @@
-#include "../lib/terminal.c"
+#include "inventory/inventory.c"
+#include "item/item.c"
+#include "lib/errors.c"
+#include "lib/log.c"
+#include "lib/termcolor.c"
+#include "lib/terminal.c"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <unistd.h>
 
-void clear_screen() {
-  printf("\033[H\033[J"); // ANSI escape code to clear the screen
-}
-
-void move_cursor(int row, int col) {
-  printf("\033[%d;%dH", row, col); // ANSI escape code to move the cursor
-}
-
-void print_menu() {
-  clear_screen();
-  move_cursor(1, 1);
-  printf("Please enter your choice:\n");
-  print_option(1, "Manage Items");
-  print_option(2, "Manage Suppliers");
-  print_option(3, "Edit Preferences");
-  printf("%s\n", format_option(0, "exit", RED));
-}
-
-void print_bottom_message(const char *message) {
-  struct winsize w;
-  ioctl(STDOUT_FILENO, TIOCGWINSZ, &w); // Get terminal size
-  move_cursor(w.ws_row, 1);             // Move cursor to the bottom row
-  printf("%s", message);
-}
-
 int main() {
+  struct Inventory *inventory = create_inventory(1);
+  add_item(inventory, 1, 10.0, "Test Item", "This is a test item");
+  struct Item *item =
+      add_item(inventory, 2, 20.0, "Test Item 2", "This is a test item 2");
+
   int exit = 0;
   while (!exit) {
     print_menu();
@@ -41,7 +26,28 @@ int main() {
     move_cursor(1, 1);
     switch (choice) {
     case 1:
-      printf("Item Management\n");
+      printf("Please enter your choice:\n");
+      print_option(1, "Show Items");
+      print_option(2, "Add Item");
+      print_option(3, "Find Item");
+      printf("%s\n", format_option(0, "exit", RED));
+      int inv_choice = getch() - '0';
+      switch (inv_choice) {
+      case 1:
+        printf("Show items");
+        break;
+      case 2:
+        printf("Show Items");
+        break;
+      case 3:
+        printf("Preferences\n");
+        break;
+      case 0:
+        break;
+      default:
+        printf("Invalid choice\n");
+        break;
+      }
       break;
     case 2:
       printf("Supplier Management\n");
@@ -60,5 +66,7 @@ int main() {
     getch(); // Wait for user input before continuing
   }
 
+  print_item(item);
+  delete_inventory(inventory);
   return EXIT_SUCCESS;
 }
