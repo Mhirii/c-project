@@ -1,4 +1,180 @@
-[Sun Jan 19 15:43:21 2025] INFO  Starting program
-[Sun Jan 19 15:43:21 2025] ERROR  file=src/main.c fn=main msg=hello
-[Wed Jan 22 19:31:32 2025] INFO  Starting program
-[Wed Jan 22 19:31:32 2025] ERROR  file=src/main.c fn=main msg=hello
+[Wed Jan 22 21:42:53 2025] INFO  Starting program
+[Wed Jan 22 21:42:53 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:43:30 2025] INFO  Starting program
+[Wed Jan 22 21:43:30 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:43:59 2025] INFO  Starting program
+[Wed Jan 22 21:43:59 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:44:03 2025] INFO  Starting program
+[Wed Jan 22 21:44:03 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:44:20 2025] INFO  Starting program
+[Wed Jan 22 21:44:20 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:44:41 2025] INFO  Starting program
+[Wed Jan 22 21:44:41 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:45:43 2025] INFO  Starting program
+[Wed Jan 22 21:45:43 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:45:54 2025] INFO  Starting program
+[Wed Jan 22 21:45:54 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:46:06 2025] INFO  Starting program
+[Wed Jan 22 21:46:06 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:46:09 2025] INFO  Starting program
+[Wed Jan 22 21:46:09 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:46:12 2025] INFO  Starting program
+[Wed Jan 22 21:46:12 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:46:16 2025] INFO  Starting program
+[Wed Jan 22 21:46:16 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:46:20 2025] INFO  Starting program
+[Wed Jan 22 21:46:20 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:46:32 2025] INFO  Starting program
+[Wed Jan 22 21:46:32 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file example.json
+[Wed Jan 22 21:46:55 2025] INFO  Starting program
+[Wed Jan 22 21:46:55 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:48:44 2025] INFO  Starting program
+[Wed Jan 22 21:48:44 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:49:30 2025] INFO  Starting program
+[Wed Jan 22 21:49:30 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:49:36 2025] INFO  Starting program
+[Wed Jan 22 21:49:36 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:51:38 2025] INFO  Starting program
+[Wed Jan 22 21:51:38 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:51:38 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:51:38 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:52:34 2025] INFO  Starting program
+[Wed Jan 22 21:52:34 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:52:34 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:52:34 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:52:48 2025] INFO  Starting program
+[Wed Jan 22 21:52:48 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:52:48 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:52:48 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:53:35 2025] INFO  Starting program
+[Wed Jan 22 21:53:35 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:53:35 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:53:35 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:54:26 2025] INFO  Starting program
+[Wed Jan 22 21:54:26 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:54:26 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:54:26 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:54:40 2025] INFO  Starting program
+[Wed Jan 22 21:54:40 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:54:40 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:54:40 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:55:05 2025] INFO  Starting program
+[Wed Jan 22 21:55:05 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:55:05 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:55:05 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:55:12 2025] INFO  Starting program
+[Wed Jan 22 21:55:12 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:55:12 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:55:12 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:55:27 2025] INFO  Starting program
+[Wed Jan 22 21:55:27 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:55:27 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:55:27 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:55:32 2025] INFO  Starting program
+[Wed Jan 22 21:55:32 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:55:32 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:55:32 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:55:34 2025] INFO  Starting program
+[Wed Jan 22 21:55:34 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:55:34 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:55:34 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:55:44 2025] INFO  Starting program
+[Wed Jan 22 21:55:44 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:55:44 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:55:44 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:55:48 2025] INFO  Starting program
+[Wed Jan 22 21:55:48 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:55:48 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:55:48 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:56:24 2025] INFO  Starting program
+[Wed Jan 22 21:56:24 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:56:24 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:56:24 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:56:30 2025] INFO  Starting program
+[Wed Jan 22 21:56:30 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:56:30 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:56:30 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:56:36 2025] INFO  Starting program
+[Wed Jan 22 21:56:36 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:56:36 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:56:36 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:56:42 2025] INFO  Starting program
+[Wed Jan 22 21:56:42 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:56:42 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:56:42 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:59:15 2025] INFO  Starting program
+[Wed Jan 22 21:59:15 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:59:15 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:59:15 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:59:42 2025] INFO  Starting program
+[Wed Jan 22 21:59:42 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:59:42 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:59:42 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:59:52 2025] INFO  Starting program
+[Wed Jan 22 21:59:52 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:59:52 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node_json msg=Error parsing inventory node, Aborting parsing file inv.json
+[Wed Jan 22 21:59:52 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 21:59:58 2025] INFO  Starting program
+[Wed Jan 22 21:59:58 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:59:58 2025] ERROR  file=src/inventory/inventory_json.c fn=parse_inventory_node msg=Error parsing inventory item
+[Wed Jan 22 21:59:58 2025] ERROR  file=src/main.c fn=main msg=Failed to parse inventory from file inv.json
+[Wed Jan 22 22:00:05 2025] INFO  Starting program
+[Wed Jan 22 22:10:14 2025] INFO  Starting program
+[Wed Jan 22 22:12:24 2025] INFO  Starting program
+[Wed Jan 22 22:24:35 2025] INFO  Starting program
+[Wed Jan 22 22:25:42 2025] INFO  Starting program
+[Wed Jan 22 22:28:00 2025] INFO  Starting program
+[Wed Jan 22 22:30:37 2025] INFO  Starting program
+[Wed Jan 22 22:30:52 2025] INFO  Starting program
+[Wed Jan 22 22:31:06 2025] INFO  Starting program
+[Wed Jan 22 22:31:16 2025] INFO  Starting program
+[Wed Jan 22 22:32:03 2025] INFO  Starting program
+[Wed Jan 22 22:32:03 2025] INFO  {,"id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:32:03 2025] INFO  {,"id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:32:03 2025] INFO  {,"id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:32:03 2025] INFO  {,"id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:34:20 2025] INFO  Starting program
+[Wed Jan 22 22:34:20 2025] INFO  {,"id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:34:20 2025] INFO  {,"id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:34:20 2025] INFO  {,"id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:34:20 2025] INFO  {,"id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:35:11 2025] INFO  Starting program
+[Wed Jan 22 22:35:11 2025] INFO  "id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:35:11 2025] INFO  "id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:35:11 2025] INFO  "id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:35:11 2025] INFO  "id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:35:38 2025] INFO  Starting program
+[Wed Jan 22 22:35:38 2025] INFO  {,"id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:35:38 2025] INFO  {,"id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:35:38 2025] INFO  {,"id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:35:38 2025] INFO  {,"id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:36:36 2025] INFO  Starting program
+[Wed Jan 22 22:36:36 2025] INFO  {,"id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:36:36 2025] INFO  {,"id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:36:36 2025] INFO  {,"id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:36:36 2025] INFO  {,"id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:36:59 2025] INFO  Starting program
+[Wed Jan 22 22:36:59 2025] INFO  {,"id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:36:59 2025] INFO  {,"id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:36:59 2025] INFO  {,"id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:36:59 2025] INFO  {,"id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:37:08 2025] INFO  Starting program
+[Wed Jan 22 22:37:08 2025] INFO  {,"id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:37:08 2025] INFO  {,"id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:37:08 2025] INFO  {,"id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:37:08 2025] INFO  {,"id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:37:27 2025] INFO  Starting program
+[Wed Jan 22 22:37:27 2025] INFO  {,"id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:37:27 2025] INFO  {,"id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:37:27 2025] INFO  {,"id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:37:27 2025] INFO  {,"id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:37:45 2025] INFO  Starting program
+[Wed Jan 22 22:37:45 2025] INFO  "id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:37:45 2025] INFO  "id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:37:45 2025] INFO  "id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:37:45 2025] INFO  "id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}
+[Wed Jan 22 22:38:42 2025] INFO  Starting program
+[Wed Jan 22 22:38:42 2025] INFO  {,"id":1,"name":"Product A","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:38:42 2025] INFO  {,"id":2,"name":"Product B","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1697049600}
+[Wed Jan 22 22:38:42 2025] INFO  {,"id":1,"name":"Product C","price":19.99,"quantity":100,"reorder_level":20,"supplier_id":123,"last_updated":1}
+[Wed Jan 22 22:38:42 2025] INFO  {,"id":2,"name":"Product D","price":29.99,"quantity":50,"reorder_level":10,"supplier_id":456,"last_updated":1}

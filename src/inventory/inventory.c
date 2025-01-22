@@ -27,16 +27,18 @@ void delete_inventory(struct InventoryNode *head) {
   }
 }
 
-struct InventoryNode *inventory_add(struct InventoryNode *head,
-                                    struct InventoryItem item) {
-
-  struct InventoryNode *new_node = new_inventory();
+struct InventoryNode *inventory_append(struct InventoryNode *head,
+                                       struct InventoryItem item) {
+  struct InventoryNode *new_node =
+      (struct InventoryNode *)malloc(sizeof(struct InventoryNode));
   if (new_node == NULL) {
     LogErr(__func__, __FILE__, "Error allocating memory for new node");
     return NULL;
   }
 
   new_node->data = item;
+  new_node->next = NULL;
+
   if (head == NULL) {
     return new_node;
   }
@@ -45,7 +47,9 @@ struct InventoryNode *inventory_add(struct InventoryNode *head,
   while (current->next != NULL) {
     current = current->next;
   }
+
   current->next = new_node;
+
   return head;
 }
 
@@ -169,6 +173,5 @@ int check_id_availability(struct InventoryNode *head, int id) {
 struct InventoryNode *inventory_from_json(struct InventoryNode *head,
                                           char *json) {
   LogErr(__func__, __FILE__, "Not implemented");
-
   return NULL;
 }

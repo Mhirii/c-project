@@ -1,13 +1,28 @@
 #ifndef ERR_H
 #define ERR_H
 
-struct Error {
-	char *message;
-};
+#define CHECK_ERROR(condition, message) \
+  if (condition) {                                  \
+    LOG_ERR(message);                               \
+    *isErr = 1;                                     \
+  }
 
-struct Error *create_error(char *message);
-void log_error(char *message);
-void panic_error(char *message);
+#define CHECK_ERROR_RETURN(condition, message, return_type) \
+  if (condition) {                                  \
+    LOG_ERR(message);                               \
+    *isErr = 1;                                     \
+    return (return_type){0};                        \
+  }
+
+// Example usage:
+// struct Result {
+//   int value;
+// };
+//
+// Result divide(int a, int b, int* isErr) {
+//   CHECK_ERROR_RETURN(b == 0, "Division by zero", Result);
+//   return (Result){a / b};
+// }
 
 
 #endif

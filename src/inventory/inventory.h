@@ -27,7 +27,7 @@ struct InventoryItem *new_inventory_item(int id, char *name, double price,
                                          int supplier_id);
 void delete_inventory_item(struct InventoryItem *item);
 
-struct InventoryNode* inventory_add(struct InventoryNode* head, struct InventoryItem item);
+struct InventoryNode* inventory_append(struct InventoryNode* head, struct InventoryItem item);
 struct InventoryNode* inventory_update(struct InventoryNode* head, int id, struct InventoryItem new_data);
 struct InventoryNode* inventory_delete(struct InventoryNode* head, int id);
 struct InventoryItem* inventory_find(struct InventoryNode* head, int id);

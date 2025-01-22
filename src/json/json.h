@@ -73,4 +73,121 @@ int parse_json_bool(const char **json, int *num);
  */
 int parse_json_null(const char **json, int *num);
 
+/**
+ * @brief Parse the start of a JSON object
+ * @param json Pointer to a pointer of the JSON string
+ * @return 1 if successful, 0 if not a JSON object
+ *
+ * Takes a pointer to JSON string and advances it past the opening brace.
+ * Returns 1 if successful, 0 if not the start of an object.
+ */
+int parse_json_object(const char **json);
+
+/**
+ * @brief Parse the end of a JSON object
+ * @param json Pointer to a pointer of the JSON string
+ * @return 1 if successful, 0 if not the end of an object
+ *
+ * Takes a pointer to JSON string and advances it past the closing brace.
+ * Returns 1 if successful, 0 if not the end of an object.
+ */
+int parse_json_object_end(const char **json);
+
+/**
+ * @brief Parse a JSON object key
+ * @param json Pointer to a pointer of the JSON string
+ * @param key Pointer to a string pointer that will be allocated
+ * @return 1 if successful, 0 if invalid key
+ *
+ * Takes a pointer to JSON string and parses an object key.
+ * Allocates memory for and returns the key string via key parameter.
+ * Returns 1 if successful, 0 if invalid key format.
+ */
+int parse_json_key(const char **json, char **key);
+
+/**
+ * @brief Parse a JSON key-value separator
+ * @param json Pointer to a pointer of the JSON string
+ * @return 1 if successful, 0 if not a separator
+ *
+ * Takes a pointer to JSON string and advances it past the colon separator.
+ * Returns 1 if successful, 0 if not a valid separator.
+ */
+int parse_json_key_value_separator(const char **json);
+
+/**
+ * @brief Parse a JSON value separator
+ * @param json Pointer to a pointer of the JSON string
+ * @return 1 if successful, 0 if not a separator
+ *
+ * Takes a pointer to JSON string and advances it past the comma separator.
+ * Returns 1 if successful, 0 if not a valid separator.
+ */
+int parse_json_value_separator(const char **json);
+
+/**
+ * @brief Parse the start of a JSON array
+ * @param json Pointer to a pointer of the JSON string
+ * @return 1 if successful, 0 if not a JSON array
+ *
+ * Takes a pointer to JSON string and advances it past the opening bracket.
+ * Returns 1 if successful, 0 if not the start of an array.
+ */
+int parse_json_array(const char **json);
+
+/**
+ * @brief Parse the end of a JSON array
+ * @param json Pointer to a pointer of the JSON string
+ * @return 1 if successful, 0 if not the end of an array
+ *
+ * Takes a pointer to JSON string and advances it past the closing bracket.
+ * Returns 1 if successful, 0 if not the end of an array.
+ */
+int parse_json_array_end(const char **json);
+
+
+/**
+ * @brief Append a key-value pair to a JSON string
+ * @param json Pointer to a pointer of the JSON string that will be modified
+ * @param key The key string to append
+ * @param value The value string to append
+ *
+ * Takes a pointer to a JSON string pointer and appends a key-value pair.
+ * Allocates or reallocates memory as needed and adds comma separators.
+ * The key and value are formatted as a proper JSON pair.
+ */
+void append_json_pair(char **json, const char *key, const char *value);
+
+/**
+ * @brief Append a string key-value pair to a JSON string
+ * @param json Pointer to a pointer of the JSON string that will be modified
+ * @param key The key string to append
+ * @param value The string value to append
+ *
+ * Formats and appends a key-value pair where the value is a string.
+ * The value is properly quoted as a JSON string.
+ */
+void append_json_string_pair(char **json, const char *key, const char *value);
+
+/**
+ * @brief Append a number key-value pair to a JSON string
+ * @param json Pointer to a pointer of the JSON string that will be modified
+ * @param key The key string to append
+ * @param value The integer value to append
+ *
+ * Formats and appends a key-value pair where the value is an integer number.
+ */
+void append_json_number_pair(char **json, const char *key, int value);
+
+/**
+ * @brief Append a float key-value pair to a JSON string
+ * @param json Pointer to a pointer of the JSON string that will be modified
+ * @param key The key string to append
+ * @param value The double value to append
+ *
+ * Formats and appends a key-value pair where the value is a floating point number.
+ * The float is formatted to 2 decimal places.
+ */
+void append_json_float_pair(char **json, const char *key, double value);
+
 #endif
