@@ -1,0 +1,4 @@
+[Sun Jan 19 15:43:21 2025] INFO  Starting program
+[Sun Jan 19 15:43:21 2025] ERROR  file=src/main.c fn=main msg=hello
+[Wed Jan 22 19:31:32 2025] INFO  Starting program
+[Wed Jan 22 19:31:32 2025] ERROR  file=src/main.c fn=main msg=hello
