@@ -36,26 +36,16 @@ int main() {
   write_inventory_list_to_file(head, "output.json");
 
   struct InventoryNode *current = head;
-  while (current) {
-    inventory_display_item(&(current->data));
-    // printf("ID: %d\n", current->data.id);
-    // printf("Name: %s\n", current->data.name);
-    // printf("Price: %.2f\n", current->data.price);
-    // printf("Quantity: %d\n", current->data.quantity);
-    // printf("Reorder Level: %d\n", current->data.reorder_level);
-    // printf("Supplier ID: %d\n", current->data.supplier_id);
-    // printf("Last Updated: %ld\n", current->data.last_updated);
-    printf("---\n");
-
-    current = current->next;
-  }
+  inventory_display_all(current, 1);
 
   // Free the linked list
   while (head) {
     struct InventoryNode *temp = head;
     head = head->next;
-    free(temp->data.name);
-    free(temp);
+    if (temp) {
+      free(temp->data.name);
+      free(temp);
+    }
   }
 
   return 0;

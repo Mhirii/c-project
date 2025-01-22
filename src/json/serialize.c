@@ -6,13 +6,12 @@ void append_json_pair(char **json, const char *key, const char *value) {
   char pair[MAX_JSON_STRING_LENGTH];
   snprintf(pair, sizeof(pair), "\"%s\":%s", key, value);
 
-  if (*json) {
+  if (*json && (*json)[strlen(*json) - 1] != '{') {
     // +2 : 1 lel comma w 1 lel null
     *json = realloc(*json, strlen(*json) + strlen(pair) + 2);
     strcat(*json, ",");
   } else {
-    *json = malloc(strlen(pair) + 1);
-    strcpy(*json, "");
+    *json = realloc(*json, strlen(*json) + strlen(pair) + 1);
   }
   strcat(*json, pair);
 }
