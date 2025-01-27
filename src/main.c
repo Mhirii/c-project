@@ -8,17 +8,7 @@
 #include <stdio.h>
 
 int main() {
-  Log(1, "Starting program");
-  // LOG_ERR("hello");
-
-  // struct InventoryItem *item1 = new_inventory_item(1, "test", 10, 10, 0, 1);
-  // struct InventoryNode *inventory = inventory_add(NULL, *item1);
-
-  // struct InventoryItem *item2 = read_inventory_item(inventory);
-
-  // inventory_add(inventory, *item2);
-  // inventory_display_all(inventory, 1);
-
+  LOG(1, "Starting program");
   const char *path = "inv.json";
   struct InventoryNode *head = parse_inventory_node_json(path);
 
@@ -32,6 +22,8 @@ int main() {
 
   inventory_append(head, item1);
   inventory_append(head, item2);
+
+  LOG(1, "Inventory successfully parsed");
 
   write_inventory_list_to_file(head, "output.json");
 

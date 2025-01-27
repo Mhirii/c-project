@@ -9,7 +9,7 @@ struct InventoryNode *new_inventory() {
       (struct InventoryNode *)malloc(sizeof(struct InventoryNode));
 
   if (node == NULL) {
-    LogErr(__func__, __FILE__, "Error allocating memory for new node");
+    LOG_ERR("Error allocating memory for new node");
     return NULL;
   }
   node->next = NULL;
@@ -32,7 +32,7 @@ struct InventoryNode *inventory_append(struct InventoryNode *head,
   struct InventoryNode *new_node =
       (struct InventoryNode *)malloc(sizeof(struct InventoryNode));
   if (new_node == NULL) {
-    LogErr(__func__, __FILE__, "Error allocating memory for new node");
+    LOG_ERR("Error allocating memory for new node");
     return NULL;
   }
 
@@ -61,11 +61,11 @@ struct InventoryItem *new_inventory_item(int id, char *name, double price,
 
   if (item == NULL) {
     return NULL;
-    LogErr(__func__, __FILE__, "Error allocating memory for new node");
+    LOG_ERR("Error allocating memory for new node");
   }
 
   if (id <= 0) {
-    LogErr(__func__, __FILE__, "id is not valid");
+    LOG_ERR("id is not valid");
     free(item);
     return NULL;
   }
@@ -73,33 +73,34 @@ struct InventoryItem *new_inventory_item(int id, char *name, double price,
 
   if (name == NULL || strlen(name) > MAX_NAME_LENGTH) {
 
-    LogErr(__func__, __FILE__, "name is not valid");
+    LOG_ERR("name is not valid");
     free(item);
     return NULL;
   }
   item->name = name;
 
   if (price <= 0) {
-    LogErr(__func__, __FILE__, "price is not valid");
+
+    LOG_ERR("price is not valid");
     free(item);
     return NULL;
   }
   if (quantity < 0) {
-    LogErr(__func__, __FILE__, "quantity cannot be negative");
+    LOG_ERR("quantity cannot be negative");
     free(item);
     return NULL;
   }
   item->quantity = quantity;
 
   if (reorder_level < 0) {
-    LogErr(__func__, __FILE__, "reorder level cannot be negative");
+    LOG_ERR("reorder level cannot be negative");
     free(item);
     return NULL;
   }
   item->reorder_level = reorder_level;
 
   if (supplier_id <= 0) {
-    LogErr(__func__, __FILE__, "supplier id is not valid");
+    LOG_ERR("supplier id is not valid");
     free(item);
     return NULL;
   }
@@ -124,7 +125,7 @@ struct InventoryItem *inventory_find(struct InventoryNode *head, int id);
 
 void inventory_display_all(struct InventoryNode *head, int minimal) {
   if (head == NULL) {
-    LogErr(__func__, __FILE__, "Cannot display empty inventory");
+    LOG_ERR("Cannot display empty inventory");
     return;
   }
 
@@ -141,7 +142,7 @@ void inventory_display_all(struct InventoryNode *head, int minimal) {
 
 void inventory_display_item(struct InventoryItem *item) {
   if (item == NULL) {
-    LogErr(__func__, __FILE__, "Cannot display NULL item");
+    LOG_ERR("Cannot display NULL item");
     return;
   }
 
@@ -172,6 +173,6 @@ int check_id_availability(struct InventoryNode *head, int id) {
 
 struct InventoryNode *inventory_from_json(struct InventoryNode *head,
                                           char *json) {
-  LogErr(__func__, __FILE__, "Not implemented");
+  LOG_ERR("Not implemented");
   return NULL;
 }

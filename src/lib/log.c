@@ -111,26 +111,3 @@ void Log(enum log_levels level, char *message) {
   struct Log *log = new_log(level, message);
   print_log(log);
 }
-
-void LogErr(const char *func, const char *file, const char *format, ...) {
-  va_list args;
-  va_start(args, format);
-
-  char formatted_msg[1024];
-  vsnprintf(formatted_msg, sizeof(formatted_msg), format, args);
-
-  va_end(args);
-
-  char *logmsg =
-      malloc(strlen(func) + strlen(file) + strlen(formatted_msg) + 4);
-
-  strcpy(logmsg, formatted_msg);
-  strcat(logmsg, " file=");
-  strcat(logmsg, file);
-  strcat(logmsg, " func=");
-  strcat(logmsg, func);
-
-  struct Log *log = new_log(3, logmsg);
-  print_log(log);
-  free(logmsg);
-}
