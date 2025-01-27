@@ -1,20 +1,18 @@
 #include "cli/inventory.c"
+#include "cli/menu.c"
 #include "config/config.h"
 #include "inventory/inventory.c"
 #include "inventory/inventory.h"
 #include "inventory/inventory_json.c"
 #include "lib/lib.c"
 #include "json/json.c"
-#include <stdio.h>
 
-int main() {
-  LOG(1, "Starting program");
+void example() {
   const char *path = "inv.json";
   struct InventoryNode *head = parse_inventory_node_json(path);
 
   if (!head) {
     LOG_ERR("Failed to parse inventory from file %s", path);
-    return 1;
   }
 
   struct InventoryItem item1 = {1, "Product C", 19.99, 100, 20, 123, 1};
@@ -39,6 +37,12 @@ int main() {
       free(temp);
     }
   }
+}
 
+int main() {
+  LOG(1, "Starting program");
+  struct Config config = {10, 10, "default.log", 1};
+
+  main_menu(&config);
   return 0;
 }
