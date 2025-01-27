@@ -3,6 +3,7 @@
 
 #include "lib.h"
 
+#include "fs/fs.c"
 #include "io.c"
 #include "log.c"
 

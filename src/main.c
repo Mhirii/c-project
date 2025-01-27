@@ -1,8 +1,7 @@
 #include "cli/inventory.c"
 #include "cli/menu.c"
-#include "config/config.h"
+#include "config/config.c"
 #include "inventory/inventory.c"
-#include "inventory/inventory.h"
 #include "inventory/inventory_json.c"
 #include "lib/lib.c"
 #include "json/json.c"
@@ -41,8 +40,7 @@ void example() {
 
 int main() {
   LOG(1, "Starting program");
-  struct Config config = {10, 10, "default.log", 1};
-
-  main_menu(&config);
+  Config *config = load_config("config.json");
+  free(config);
   return 0;
 }

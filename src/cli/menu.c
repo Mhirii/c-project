@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 void menu();
-void main_menu(struct Config *config) {
+void main_menu(Config *config) {
   char choice = '9';
   while (choice != '0') {
     printf("\n\n");
@@ -26,7 +26,7 @@ void main_menu(struct Config *config) {
   }
 }
 
-void inventory_management(struct Config *config) {
+void inventory_management(Config *config) {
   char choice = '9';
   while (choice != '0') {
     printf("\n\n");

@@ -6,7 +6,7 @@
 #include "../config/config.h"
 
 void menu();
-void main_menu(struct Config *config);
-void inventory_management (struct Config *config);
+void main_menu( Config *config);
+void inventory_management ( Config *config);
 
 #endif

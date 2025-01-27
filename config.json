@@ -1,0 +1,6 @@
+{
+	"low_stock_threshold": 10,
+	"auto_reorder": 3,
+	"log_file_path": "512",
+	"report_generation_frequency": 1
+}

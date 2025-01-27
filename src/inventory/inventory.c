@@ -155,7 +155,7 @@ void inventory_display_item(struct InventoryItem *item) {
   printf("Last Updated:  %ld\n", item->last_updated);
 }
 
-void check_low_stock(struct InventoryNode *head, struct Config *config);
+void check_low_stock(struct InventoryNode *head, Config *config);
 
 void update_stock_quantity(struct InventoryNode *head, int id,
                            int quantity_change);
