@@ -40,7 +40,17 @@ void example() {
 
 int main() {
   LOG(1, "Starting program");
-  Config *config = load_config("config.json");
+  Config *config = malloc(sizeof(Config));
+
+  load_config("config.json", config);
+
+  LOG(0, "log_file_path %s", config->log_file_path);
+  LOG(0, "low_stock_threshold %d", config->low_stock_threshold);
+  LOG(0, "auto_reorder %d", config->auto_reorder);
+  LOG(0, "report_generation_frequency %d", config->report_generation_frequency);
+
+  main_menu(config);
+
   free(config);
   return 0;
 }

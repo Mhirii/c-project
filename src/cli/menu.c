@@ -1,8 +1,11 @@
 #include "menu.h"
+#include "../lib/lib.h"
 #include <stdio.h>
 
 void menu();
 void main_menu(Config *config) {
+  LOG(1, "Starting main menu");
+  LOG(0, "log_file_path %s", config->log_file_path);
   char choice = '9';
   while (choice != '0') {
     printf("\n\n");

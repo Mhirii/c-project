@@ -1,20 +1,23 @@
+#ifndef CONFIG_C
+#define CONFIG_C
+
 #include "config.h"
 #include "../json/json.h"
 #include "../lib/lib.h"
 #include <stdlib.h>
 #include <string.h>
 
-Config *parse_config(const char **buffer) {
+char global_log_file_path[MAX_NAME_LENGTH];
+
+int parse_config(const char **buffer, Config *config) {
   LOG(0, "Initiating Config Parser");
   int *isErr = malloc(sizeof(int));
-  Config *config = (Config *)malloc(sizeof(Config));
+  // Config *config = (Config *)malloc(sizeof(Config));
 
   if (config == NULL) {
     LOG_ERR("Error: Memory allocation failed.\n");
-    return NULL;
+    return 0;
   }
-
-  memcpy(config, &DefaultConfig, sizeof(Config));
 
   CHECK_ERROR((!parse_json_object(buffer)), "Invalid JSON object\n");
 
@@ -43,6 +46,9 @@ Config *parse_config(const char **buffer) {
       strncpy(config->log_file_path, log_path, MAX_NAME_LENGTH - 1);
       config->log_file_path[MAX_NAME_LENGTH - 1] = '\0';
 
+      strncpy(global_log_file_path, config->log_file_path, MAX_NAME_LENGTH - 1);
+      global_log_file_path[MAX_NAME_LENGTH - 1] = '\0';
+
       free(log_path);
       LOG(0, "log_file_path: %s", config->log_file_path);
 
@@ -60,24 +66,33 @@ Config *parse_config(const char **buffer) {
     free(key);
 
     skip_whitespace(buffer);
+    LOG(0, "Buffer: %s", *buffer);
     if (**buffer != '}') {
-
       CHECK_ERROR((!parse_json_value_separator(buffer)),
                   "Failed to parse value separator");
     }
   }
-  return NULL;
+
+  return *isErr == 1 ? 0 : 1;
 }
 
-Config *load_config(char *config_file_path) {
+int load_config(char *config_file_path, Config *config) {
+  memcpy(config, &DefaultConfig, sizeof(Config));
   LOG(0, "Loading config file: %s", config_file_path);
-  const char *buffer = read_file(config_file_path);
-  if (!buffer) {
-    LOG_ERR("Failed to read config file %s", config_file_path);
-    return NULL;
+
+  int *isErr = malloc(sizeof(int));
+
+  long file_size;
+  char *buffer;
+  if (!read_file(config_file_path, &buffer, &file_size)) {
+    return 0;
   }
 
-  Config *config = parse_config(&buffer);
+  const char *ptr = buffer;
+  parse_config(&ptr, config);
+
   free((void *)buffer);
-  return config;
+  return 1;
 }
+
+#endif

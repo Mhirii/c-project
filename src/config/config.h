@@ -2,6 +2,7 @@
 #define CONFIG_H
 #include "../lib/vars.h"
 
+
 typedef struct {
     int low_stock_threshold;
     int auto_reorder;
@@ -11,7 +12,7 @@ typedef struct {
 
 const Config DefaultConfig = {10, 0, "default.log", 1};
 
-Config *parse_config(const char **buffer);
-Config *load_config(char *config_file_path);
+int parse_config(const char **buffer, Config *config);
+int load_config(char *config_file_path,Config *config );
 
 #endif

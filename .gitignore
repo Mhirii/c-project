@@ -2,3 +2,4 @@ bin/*
 ignore
 log.txt
 output.json
+default.log

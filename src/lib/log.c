@@ -1,4 +1,5 @@
 #include "log.h"
+#include "../config/config.c"
 #include "../lib/vars.h"
 #include <stdarg.h>
 #include <stdio.h>
@@ -51,7 +52,7 @@ int print_log(struct Log *log) {
     return -1;
   }
 
-  FILE *log_file = fopen(LOG_FILE, "a");
+  FILE *log_file = fopen(global_log_file_path, "a");
   if (!log_file) {
     free(log_line);
     return -1;

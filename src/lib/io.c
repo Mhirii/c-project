@@ -30,25 +30,27 @@ int check_file_exists(char *filename) {
   return 0;
 }
 
-char *read_file(const char *path) {
-  FILE *file = fopen(path, "r");
+int read_file(const char *file_path, char **buffer, long *file_size) {
+  FILE *file = fopen(file_path, "r");
   if (!file) {
-    return NULL;
+    LOG_ERR("Failed to open file %s", file_path);
+    return 0;
   }
 
   fseek(file, 0, SEEK_END);
-  long file_size = ftell(file);
+  *file_size = ftell(file);
   fseek(file, 0, SEEK_SET);
 
-  char *content = (char *)malloc(file_size + 1);
-  if (!content) {
+  *buffer = (char *)malloc(*file_size + 1);
+  if (!*buffer) {
+    LOG_ERR("Memory allocation failed for file %s", file_path);
     fclose(file);
-    return NULL;
+    return 0;
   }
 
-  fread(content, 1, file_size, file);
-  content[file_size] = '\0';
+  fread(*buffer, 1, *file_size, file);
+  (*buffer)[*file_size] = '\0';
 
   fclose(file);
-  return content;
+  return 1;
 }
