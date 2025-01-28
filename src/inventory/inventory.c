@@ -4,9 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct InventoryNode *new_inventory() {
-  struct InventoryNode *node =
-      (struct InventoryNode *)malloc(sizeof(struct InventoryNode));
+InventoryNode *new_inventory() {
+  InventoryNode *node = (InventoryNode *)malloc(sizeof(InventoryNode));
 
   if (node == NULL) {
     LOG_ERR("Error allocating memory for new node");
@@ -16,9 +15,9 @@ struct InventoryNode *new_inventory() {
   return node;
 }
 
-void delete_inventory(struct InventoryNode *head) {
-  struct InventoryNode *current = head;
-  struct InventoryNode *next;
+void delete_inventory(InventoryNode *head) {
+  InventoryNode *current = head;
+  InventoryNode *next;
 
   while (current != NULL) {
     next = current->next;
@@ -27,10 +26,8 @@ void delete_inventory(struct InventoryNode *head) {
   }
 }
 
-struct InventoryNode *inventory_append(struct InventoryNode *head,
-                                       struct InventoryItem item) {
-  struct InventoryNode *new_node =
-      (struct InventoryNode *)malloc(sizeof(struct InventoryNode));
+InventoryNode *inventory_append(InventoryNode *head, InventoryItem item) {
+  InventoryNode *new_node = (InventoryNode *)malloc(sizeof(InventoryNode));
   if (new_node == NULL) {
     LOG_ERR("Error allocating memory for new node");
     return NULL;
@@ -43,7 +40,7 @@ struct InventoryNode *inventory_append(struct InventoryNode *head,
     return new_node;
   }
 
-  struct InventoryNode *current = head;
+  InventoryNode *current = head;
   while (current->next != NULL) {
     current = current->next;
   }
@@ -53,11 +50,10 @@ struct InventoryNode *inventory_append(struct InventoryNode *head,
   return head;
 }
 
-struct InventoryItem *new_inventory_item(int id, char *name, double price,
-                                         int quantity, int reorder_level,
-                                         int supplier_id) {
-  struct InventoryItem *item =
-      (struct InventoryItem *)malloc(sizeof(struct InventoryItem));
+InventoryItem *new_inventory_item(int id, char *name, double price,
+                                  int quantity, int reorder_level,
+                                  int supplier_id) {
+  InventoryItem *item = (InventoryItem *)malloc(sizeof(InventoryItem));
 
   if (item == NULL) {
     return NULL;
@@ -111,25 +107,25 @@ struct InventoryItem *new_inventory_item(int id, char *name, double price,
   return item;
 }
 
-void delete_inventory_item(struct InventoryItem *item) {
+void delete_inventory_item(InventoryItem *item) {
   free(item->name);
   free(item);
 };
 
-struct InventoryNode *inventory_update(struct InventoryNode *head, int id,
-                                       struct InventoryItem new_data);
+InventoryNode *inventory_update(InventoryNode *head, int id,
+                                InventoryItem new_data);
 
-struct InventoryNode *inventory_delete(struct InventoryNode *head, int id);
+InventoryNode *inventory_delete(InventoryNode *head, int id);
 
-struct InventoryItem *inventory_find(struct InventoryNode *head, int id);
+InventoryItem *inventory_find(InventoryNode *head, int id);
 
-void inventory_display_all(struct InventoryNode *head, int minimal) {
+void inventory_display_all(InventoryNode *head, int minimal) {
   if (head == NULL) {
     LOG_ERR("Cannot display empty inventory");
     return;
   }
 
-  struct InventoryNode *current = head;
+  InventoryNode *current = head;
   while (current != NULL) {
     if (minimal == 0) {
       inventory_display_item(&current->data);
@@ -140,7 +136,7 @@ void inventory_display_all(struct InventoryNode *head, int minimal) {
   }
 }
 
-void inventory_display_item(struct InventoryItem *item) {
+void inventory_display_item(InventoryItem *item) {
   if (item == NULL) {
     LOG_ERR("Cannot display NULL item");
     return;
@@ -155,13 +151,12 @@ void inventory_display_item(struct InventoryItem *item) {
   printf("Last Updated:  %ld\n", item->last_updated);
 }
 
-void check_low_stock(struct InventoryNode *head, Config *config);
+void check_low_stock(InventoryNode *head, Config *config);
 
-void update_stock_quantity(struct InventoryNode *head, int id,
-                           int quantity_change);
+void update_stock_quantity(InventoryNode *head, int id, int quantity_change);
 
-int check_id_availability(struct InventoryNode *head, int id) {
-  struct InventoryNode *current = head;
+int check_id_availability(InventoryNode *head, int id) {
+  InventoryNode *current = head;
   while (current != NULL) {
     if (current->data.id == id) {
       return 0;
@@ -171,8 +166,7 @@ int check_id_availability(struct InventoryNode *head, int id) {
   return 1;
 }
 
-struct InventoryNode *inventory_from_json(struct InventoryNode *head,
-                                          char *json) {
+InventoryNode *inventory_from_json(InventoryNode *head, char *json) {
   LOG_ERR("Not implemented");
   return NULL;
 }

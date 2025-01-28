@@ -6,56 +6,55 @@
 #include <string.h>
 #include <time.h>
 
-struct InventoryItem parse_inventory_item(const char **json, int *isErr) {
-  struct InventoryItem item = {0};
+InventoryItem parse_inventory_item(const char **json, int *isErr) {
+  InventoryItem item = {0};
 
   CHECK_ERROR_RETURN((!parse_json_object(json)), "Invalid JSON object\n",
-                     struct InventoryItem);
+                     InventoryItem);
 
   while (**json != '}') {
     char *key = NULL;
     CHECK_ERROR_RETURN((!parse_json_key(json, &key)), "Failed to parse key",
-                       struct InventoryItem);
+                       InventoryItem);
 
     CHECK_ERROR_RETURN((!parse_json_key_value_separator(json)),
-                       "Failed to parse key-value separator",
-                       struct InventoryItem);
+                       "Failed to parse key-value separator", InventoryItem);
 
     if (strcmp(key, "id") == 0) {
       CHECK_ERROR_RETURN((!parse_json_number(json, &item.id)),
-                         "Failed to parse id", struct InventoryItem);
+                         "Failed to parse id", InventoryItem);
 
     } else if (strcmp(key, "name") == 0) {
 
       CHECK_ERROR_RETURN((!parse_json_string(json, &item.name)),
-                         "Failed to parse name", struct InventoryItem);
+                         "Failed to parse name", InventoryItem);
 
     } else if (strcmp(key, "price") == 0) {
       float price;
       CHECK_ERROR_RETURN((!parse_json_float(json, &price)),
-                         "Failed to parse price", struct InventoryItem);
+                         "Failed to parse price", InventoryItem);
 
       item.price = (double)price;
     } else if (strcmp(key, "quantity") == 0) {
       CHECK_ERROR_RETURN((!parse_json_number(json, &item.quantity)),
-                         "Failed to parse quantity", struct InventoryItem);
+                         "Failed to parse quantity", InventoryItem);
 
     } else if (strcmp(key, "reorder_level") == 0) {
       CHECK_ERROR_RETURN((!parse_json_number(json, &item.reorder_level)),
-                         "Failed to parse reorder_level", struct InventoryItem);
+                         "Failed to parse reorder_level", InventoryItem);
 
     } else if (strcmp(key, "supplier_id") == 0) {
       CHECK_ERROR_RETURN((!parse_json_number(json, &item.supplier_id)),
-                         "Failed to parse supplier_id", struct InventoryItem);
+                         "Failed to parse supplier_id", InventoryItem);
 
     } else if (strcmp(key, "last_updated") == 0) {
       CHECK_ERROR_RETURN((!parse_json_number(json, (int *)&item.last_updated)),
-                         "Failed to parse last_updated", struct InventoryItem);
+                         "Failed to parse last_updated", InventoryItem);
 
     } else {
       LOG_ERR("Unknown key: %s", key);
       *isErr = 1;
-      return (struct InventoryItem){0};
+      return (InventoryItem){0};
     }
 
     free(key);
@@ -64,23 +63,20 @@ struct InventoryItem parse_inventory_item(const char **json, int *isErr) {
     if (**json != '}') {
 
       CHECK_ERROR_RETURN((!parse_json_value_separator(json)),
-                         "Failed to parse value separator",
-                         struct InventoryItem);
+                         "Failed to parse value separator", InventoryItem);
     }
   }
 
   CHECK_ERROR_RETURN((!parse_json_object_end(json)),
-                     "Failed to parse object end", struct InventoryItem);
+                     "Failed to parse object end", InventoryItem);
 
   return item;
 }
 
-struct InventoryNode *parse_inventory_node(const char **json, int *isErr) {
-  struct InventoryNode *node =
-      (struct InventoryNode *)malloc(sizeof(struct InventoryNode));
+InventoryNode *parse_inventory_node(const char **json, int *isErr) {
+  InventoryNode *node = (InventoryNode *)malloc(sizeof(InventoryNode));
 
-  CHECK_ERROR_RETURN((!node), "Memory allocation failed",
-                     struct InventoryNode *);
+  CHECK_ERROR_RETURN((!node), "Memory allocation failed", InventoryNode *);
 
   node->data = parse_inventory_item(json, isErr);
 
@@ -101,7 +97,7 @@ struct InventoryNode *parse_inventory_node(const char **json, int *isErr) {
   return node;
 }
 
-struct InventoryNode *parse_inventory_node_json(const char *path) {
+InventoryNode *parse_inventory_node_json(const char *path) {
   int *isErr = malloc(sizeof(int));
   *isErr = 0;
 
@@ -135,16 +131,16 @@ struct InventoryNode *parse_inventory_node_json(const char *path) {
     return NULL;
   }
 
-  struct InventoryNode *head = NULL;
-  struct InventoryNode *tail = NULL;
+  InventoryNode *head = NULL;
+  InventoryNode *tail = NULL;
 
   while (*json_ptr != ']') {
-    struct InventoryNode *node = parse_inventory_node(&json_ptr, isErr);
+    InventoryNode *node = parse_inventory_node(&json_ptr, isErr);
     if (*isErr) {
       LOG_ERR("Error parsing inventory node, Aborting parsing file %s", path);
       free(json);
       while (head) {
-        struct InventoryNode *temp = head;
+        InventoryNode *temp = head;
         head = head->next;
         free(temp->data.name);
         free(temp);
@@ -180,7 +176,7 @@ struct InventoryNode *parse_inventory_node_json(const char *path) {
   return head;
 }
 
-char *serialize_inventory_item(struct InventoryItem item) {
+char *serialize_inventory_item(InventoryItem item) {
   char *json = NULL;
 
   // 2 bytes bc 1 lel '{' w 1 lel null
@@ -204,13 +200,13 @@ char *serialize_inventory_item(struct InventoryItem item) {
   return json;
 }
 
-char *serialize_inventory_list(struct InventoryNode *head) {
+char *serialize_inventory_list(InventoryNode *head) {
   char *json = NULL;
 
   json = malloc(2);
   strcpy(json, "[");
 
-  struct InventoryNode *current = head;
+  InventoryNode *current = head;
   while (current) {
     char *item_json = serialize_inventory_item(current->data);
     if (json[1] != '\0') {
@@ -231,8 +227,7 @@ char *serialize_inventory_list(struct InventoryNode *head) {
   return json;
 }
 
-void write_inventory_list_to_file(struct InventoryNode *head,
-                                  const char *path) {
+void write_inventory_list_to_file(InventoryNode *head, const char *path) {
   char *json = serialize_inventory_list(head);
   if (!json) {
     LOG_ERR("Failed to serialize inventory list");
