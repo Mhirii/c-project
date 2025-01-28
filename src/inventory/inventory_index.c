@@ -33,7 +33,6 @@ int comp_name(InventoryItem *item, char *name) {
 
   return 0;
 }
-
 InventoryIndex *init_inventory_index() {
   InventoryIndex *index = (InventoryIndex *)malloc(sizeof(InventoryIndex));
   index->head = NULL;

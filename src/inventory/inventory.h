@@ -20,8 +20,25 @@ typedef struct InventoryNode {
     struct InventoryNode* next;
 }InventoryNode;
 
+typedef struct InventoryIndex{
+	InventoryNode *head;
+	int size;
+	int last_id;
+} InventoryIndex;
+
+
+InventoryIndex *init_inventory_index();
+int free_inventory_index(InventoryIndex *index);
+int append_item(InventoryIndex *index, InventoryItem item);
+int del_item(InventoryIndex *index, int id);
+int update_item(InventoryIndex *index, int id, InventoryItem item);
+InventoryNode *find_item_by_id(InventoryIndex *index, int id);
+InventoryNode **search_items_by_name(InventoryIndex *index, char *name);
+InventoryNode **search_items_by_supplier_id(InventoryIndex *index, int supplier_id);
+
 InventoryNode* new_inventory();
 void delete_inventory( InventoryNode *head);
+int delete_inventory_item_by_id(InventoryNode *head, int id);
 
 InventoryItem *new_inventory_item(int id, char *name, double price,
                                          int quantity, int reorder_level,
