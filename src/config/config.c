@@ -80,8 +80,6 @@ int load_config(char *config_file_path, Config *config) {
   memcpy(config, &DefaultConfig, sizeof(Config));
   LOG(0, "Loading config file: %s", config_file_path);
 
-  int *isErr = malloc(sizeof(int));
-
   long file_size;
   char *buffer;
   if (!read_file(config_file_path, &buffer, &file_size)) {
