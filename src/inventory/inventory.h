@@ -36,6 +36,11 @@ InventoryNode *find_item_by_id(InventoryIndex *index, int id);
 InventoryNode **search_items_by_name(InventoryIndex *index, char *name);
 InventoryNode **search_items_by_supplier_id(InventoryIndex *index, int supplier_id);
 
+InventoryIndex *read_inventory_index(char *path);
+int parse_metadata(char *path, InventoryIndex *index);
+int read_items(char *path, InventoryIndex *index);
+
+
 InventoryNode* new_inventory();
 void delete_inventory( InventoryNode *head);
 int delete_inventory_item_by_id(InventoryNode *head, int id);

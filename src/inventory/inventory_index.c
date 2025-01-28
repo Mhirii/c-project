@@ -115,5 +115,9 @@ InventoryNode **search_items_by_name(InventoryIndex *index, char *name) {
   return found;
 }
 
+// TODO
 InventoryNode **search_items_by_supplier_id(InventoryIndex *index,
-                                            int supplier_id);
+                                            int supplier_id) {
+  LOG_ERR("unimplemented");
+  return NULL;
+}

@@ -1,6 +1,7 @@
 #include "io.h"
 #include "log.h"
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 
 int check_path_exists(char *path) {
@@ -51,6 +52,18 @@ int read_file(const char *file_path, char **buffer, long *file_size) {
   fread(*buffer, 1, *file_size, file);
   (*buffer)[*file_size] = '\0';
 
+  fclose(file);
+  return 1;
+}
+
+int write_file(const char *file_path, char *buffer) {
+  FILE *file = fopen(file_path, "w");
+  if (!file) {
+    LOG_ERR("Failed to open file %s", file_path);
+    return 0;
+  }
+
+  fwrite(buffer, 1, strlen(buffer), file);
   fclose(file);
   return 1;
 }

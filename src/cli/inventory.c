@@ -38,5 +38,7 @@ struct InventoryItem *read_inventory_item(struct InventoryNode *head) {
   struct InventoryItem *item =
       new_inventory_item(id, name, price, quantity, reorder_level, supplier_id);
 
+  inventory_append(head, *item);
+
   return item;
 }

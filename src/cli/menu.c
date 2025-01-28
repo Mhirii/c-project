@@ -1,10 +1,10 @@
 #include "menu.h"
 #include "../lib/lib.h"
+#include "inventory.h"
 #include <stdio.h>
 
 void menu();
 void main_menu(Config *config) {
-  LOG(1, "Starting main menu");
   LOG(0, "log_file_path %s", config->log_file_path);
   char choice = '9';
   while (choice != '0') {
@@ -44,7 +44,7 @@ void inventory_management(Config *config) {
     scanf("%c", &choice);
     switch (choice) {
     case '1':
-      // add_item(config);
+      read_inventory_item();
       break;
     case '2':
       // remove_item(config);
