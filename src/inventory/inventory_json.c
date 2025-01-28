@@ -176,29 +176,29 @@ InventoryNode *parse_inventory_node_json(const char *path) {
   return head;
 }
 
-char *serialize_inventory_item(InventoryItem item) {
-  char *json = NULL;
+// char *serialize_inventory_item(InventoryItem item) {
+//   char *json = NULL;
 
-  // 2 bytes bc 1 lel '{' w 1 lel null
-  json = malloc(2);
-  strcpy(json, "{");
+//   // 2 bytes bc 1 lel '{' w 1 lel null
+//   json = malloc(2);
+//   strcpy(json, "{");
 
-  append_json_number_pair(&json, "id", item.id);
-  append_json_string_pair(&json, "name", item.name);
-  append_json_float_pair(&json, "price", item.price);
-  append_json_number_pair(&json, "quantity", item.quantity);
-  append_json_number_pair(&json, "reorder_level", item.reorder_level);
-  append_json_number_pair(&json, "supplier_id", item.supplier_id);
-  append_json_number_pair(&json, "last_updated", (int)item.last_updated);
+//   append_json_number_pair(&json, "id", item.id);
+//   append_json_string_pair(&json, "name", item.name);
+//   append_json_float_pair(&json, "price", item.price);
+//   append_json_number_pair(&json, "quantity", item.quantity);
+//   append_json_number_pair(&json, "reorder_level", item.reorder_level);
+//   append_json_number_pair(&json, "supplier_id", item.supplier_id);
+//   append_json_number_pair(&json, "last_updated", (int)item.last_updated);
 
-  // +2 5ater kima 9blia
-  json = realloc(json, strlen(json) + 2);
-  strcat(json, "}");
+//   // +2 5ater kima 9blia
+//   json = realloc(json, strlen(json) + 2);
+//   strcat(json, "}");
 
-  Log(1, json);
+//   Log(1, json);
 
-  return json;
-}
+//   return json;
+// }
 
 char *serialize_inventory_list(InventoryNode *head) {
   char *json = NULL;

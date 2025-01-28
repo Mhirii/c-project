@@ -4,6 +4,7 @@
 #include "../json/json.h"
 #include "../lib/lib.h"
 #include "inventory.h"
+#include <dirent.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -14,10 +15,15 @@
   }
 
 InventoryIndex *read_inventory_index(char *path) {
+  LOG(0, "Reading inventory index");
   // TODO: check if path is valid and has the needed files.
 
   InventoryIndex *index = init_inventory_index();
-  int res = parse_metadata(path, index);
+
+  char *metadata = malloc(strlen(path) + strlen("/metadata") + 1);
+  sprintf(metadata, "%s/metadata", path);
+
+  int res = parse_metadata(metadata, index);
   if (res == -1) {
     LOG_ERR("Error occurred while parsing metadata file");
     free_inventory_index(index);
@@ -37,6 +43,10 @@ InventoryIndex *read_inventory_index(char *path) {
 
 char *parse_metadata_line(char *line) {
   char *key = strtok(line, "=");
+  if (!key) {
+    LOG_ERR("Failed to parse key");
+    return NULL;
+  }
   char *value = strtok(NULL, "\n");
   return value;
 }
@@ -78,8 +88,70 @@ int write_metadata(char *path, InventoryIndex *index) {
   return 0;
 }
 
-int read_items(char *path, InventoryIndex *index) { return -1; }
-int write_items(char *path, InventoryIndex *index) { return -1; }
+/**
+ * @brief Lists all JSON files in a directory
+ * @param path The dir path
+ * @param files arr that stores paths of JSON files
+ * @return -1 on error or Number of JSON files found.
+ */
+int ls_json_files(const char *path, char **files) {
+  DIR *dir;
+  struct dirent *entry;
+  int i = 0;
+
+  dir = opendir(path);
+  if (dir == NULL) {
+    LOG_ERR("Unable to open directory at %s", path);
+    return -1;
+  }
+
+  while ((entry = readdir(dir)) != NULL) {
+    const char *ext = strrchr(entry->d_name, '.');
+    if (ext && strcmp(ext, ".json") == 0) {
+      char *full_path = malloc(strlen(path) + strlen(entry->d_name) +
+                               2); // +2 : '/' + null terminator
+      sprintf(full_path, "%s/%s", path, entry->d_name);
+      files[i++] = full_path;
+    }
+  }
+
+  closedir(dir);
+
+  return i;
+}
+
+int read_items(char *path, InventoryIndex *index) {
+  char **json_files = NULL;
+  int files_count = ls_json_files(path, json_files);
+  for (int i = 0; i < files_count; i++) {
+    InventoryItem item;
+    if (read_item(json_files[i], &item) == -1) {
+      LOG_ERR("Failed to read item file %s", json_files[i]);
+      continue;
+    }
+    if (!append_item(index, item)) {
+      LOG_ERR("Failed to append item to index, file is %s", json_files[i]);
+      if (item.name)
+        free(item.name);
+      continue;
+    }
+    free(json_files[i]);
+  }
+  free(json_files);
+  return 0;
+}
+
+int write_items(char *path, InventoryIndex *index) {
+  InventoryNode *head = index->head;
+  while (head != NULL) {
+    if (!write_item(head->data.name, &head->data)) {
+      LOG_ERR("Failed to write item file %s", head->data.name);
+      return -1;
+    };
+    head = head->next;
+  }
+  return 0;
+}
 
 int read_item(char *path, InventoryItem *item) {
   char *buffer = NULL;
@@ -148,6 +220,42 @@ int read_item(char *path, InventoryItem *item) {
   return 0;
 }
 
-int write_item(char *path, InventoryItem *item) { return -1; }
+char *serialize_inventory_item(InventoryItem item) {
+  char *json = NULL;
+
+  // 2 bytes bc 1 lel '{' w 1 lel null
+  json = malloc(2);
+  strcpy(json, "{");
+
+  append_json_number_pair(&json, "id", item.id);
+  append_json_string_pair(&json, "name", item.name);
+  append_json_float_pair(&json, "price", item.price);
+  append_json_number_pair(&json, "quantity", item.quantity);
+  append_json_number_pair(&json, "reorder_level", item.reorder_level);
+  append_json_number_pair(&json, "supplier_id", item.supplier_id);
+  append_json_number_pair(&json, "last_updated", (int)item.last_updated);
+
+  // +2 5ater kima 9blia
+  json = realloc(json, strlen(json) + 2);
+  strcat(json, "}");
+
+  return json;
+}
+
+int write_item(char *path, InventoryItem *item) {
+  char *buffer = serialize_inventory_item(*item);
+  if (!buffer) {
+    LOG_ERR("Failed to serialize item");
+    return -1;
+  }
+
+  int result = write_file(path, buffer) ? 0 : -1;
+  free(buffer);
+
+  if (result == -1) {
+    LOG_ERR("Failed to write item file");
+  }
+  return result;
+}
 
 #endif

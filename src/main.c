@@ -2,6 +2,9 @@
 #include "cli/menu.c"
 #include "config/config.c"
 #include "inventory/inventory.c"
+#include "inventory/inventory.h"
+#include "inventory/inventory_index.c"
+#include "inventory/inventory_index_io.c"
 #include "inventory/inventory_json.c"
 #include "lib/lib.c"
 #include "json/json.c"
@@ -43,7 +46,9 @@ int main() {
   Config *config = malloc(sizeof(Config));
   load_config("config.json", config);
 
-  main_menu(config);
+  InventoryIndex *index = read_inventory_index("data");
+
+  // main_menu(config);
 
   free(config);
   return 0;

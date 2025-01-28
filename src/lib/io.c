@@ -32,6 +32,7 @@ int check_file_exists(char *filename) {
 }
 
 int read_file(const char *file_path, char **buffer, long *file_size) {
+  LOG(0, "Reading file %s", file_path);
   FILE *file = fopen(file_path, "r");
   if (!file) {
     LOG_ERR("Failed to open file %s", file_path);

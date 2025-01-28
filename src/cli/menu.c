@@ -44,7 +44,7 @@ void inventory_management(Config *config) {
     scanf("%c", &choice);
     switch (choice) {
     case '1':
-      read_inventory_item();
+      // read_inventory_item();
       break;
     case '2':
       // remove_item(config);
