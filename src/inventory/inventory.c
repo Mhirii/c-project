@@ -111,6 +111,26 @@ void delete_inventory_item(InventoryItem *item) {
   free(item->name);
   free(item);
 };
+int delete_inventory_item_by_id(InventoryNode *head, int id) {
+  int found = -1;
+  InventoryNode *current = head;
+  InventoryNode *previous = NULL;
+  while (current != NULL) {
+    if (current->data.id == id) {
+      if (previous == NULL) {
+        head = current->next;
+      } else {
+        previous->next = current->next;
+      }
+      delete_inventory_item(&current->data);
+      found = 0;
+      break;
+    }
+    previous = current;
+    current = current->next;
+  }
+  return found;
+}
 
 InventoryNode *inventory_update(InventoryNode *head, int id,
                                 InventoryItem new_data);
@@ -164,6 +184,14 @@ int check_id_availability(InventoryNode *head, int id) {
     current = current->next;
   }
   return 1;
+}
+
+InventoryNode get_last_node(InventoryNode *head) {
+  InventoryNode *current = head;
+  while (current->next != NULL) {
+    current = current->next;
+  }
+  return *current;
 }
 
 InventoryNode *inventory_from_json(InventoryNode *head, char *json) {
