@@ -61,11 +61,6 @@ InventoryItem *new_inventory_item(int id, char *name, double price,
     LOG_ERR("Error allocating memory for new node");
   }
 
-  if (id <= 0) {
-    LOG_ERR("id is not valid");
-    free(item);
-    return NULL;
-  }
   item->id = id;
 
   if (name == NULL || strlen(name) > MAX_NAME_LENGTH) {
@@ -149,7 +144,11 @@ void inventory_display_all(InventoryNode *head, int minimal) {
   InventoryNode *current = head;
   while (current != NULL) {
     if (minimal == 0) {
+      printf("\n---------------- ----------------\n\n");
       inventory_display_item(&current->data);
+      if (current->next == NULL)
+        printf("\n---------------- ----------------\n\n");
+
     } else {
       printf("%d: %s\n", current->data.id, current->data.name);
     }

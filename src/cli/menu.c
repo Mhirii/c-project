@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 void menu();
-void main_menu(Config *config) {
+void main_menu(InventoryIndex *index) {
   char choice = '9';
   while (choice != '0') {
     printf("\n\n");
@@ -17,7 +17,7 @@ void main_menu(Config *config) {
     scanf("%c", &choice);
     switch (choice) {
     case '1':
-      inventory_management(config);
+      inventory_management(index);
       break;
     case '2':
       break;
@@ -28,7 +28,7 @@ void main_menu(Config *config) {
   }
 }
 
-void inventory_management(Config *config) {
+void inventory_management(InventoryIndex *index) {
   char choice = '9';
   while (choice != '0') {
     printf("\n\n");
@@ -40,18 +40,22 @@ void inventory_management(Config *config) {
     printf("4. Exit\n");
     printf("\n");
     printf("Enter your choice: ");
-    scanf("%c", &choice);
+    scanf(" %c", &choice);
     switch (choice) {
     case '1':
-      // read_inventory_item();
+      append_item(index, *read_inventory_item());
       break;
     case '2':
-      // remove_item(config);
+      printf("Enter item id: ");
+      int id;
+      scanf("%d", &id);
+      del_item(index, id);
       break;
     case '3':
-      // list_items(config);
+      inventory_display_all(index->head, 0);
       break;
     case '4':
+      choice = '0';
       break;
     default:
       printf("Invalid choice\n");

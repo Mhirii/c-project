@@ -47,6 +47,8 @@ int update_metadata(InventoryIndex *index) {
   return 0;
 }
 
+int new_item_id(InventoryIndex *index) { return index->last_id + 1; }
+
 InventoryIndex *init_inventory_index() {
   InventoryIndex *index = (InventoryIndex *)malloc(sizeof(InventoryIndex));
   index->head = NULL;
@@ -73,10 +75,13 @@ int free_inventory_index(InventoryIndex *index) {
 }
 
 int append_item(InventoryIndex *index, InventoryItem item) {
-  if (item.id >= 0 && (!check_id_availability(index->head, item.id))) {
+  if (item.id > 0 && (!check_id_availability(index->head, item.id))) {
     LOG_ERR("tried to add item with id = %d, but it already exists", item.id);
     return -1;
   }
+
+  if (item.id == 0)
+    item.id = new_item_id(index);
 
   InventoryNode *new_node = (InventoryNode *)malloc(sizeof(InventoryNode));
   if (new_node == NULL) {
@@ -97,17 +102,18 @@ int append_item(InventoryIndex *index, InventoryItem item) {
     current->next = new_node;
   }
   index->size++;
-  index->last_id = item.id;
+  if (item.id > index->last_id)
+    index->last_id = item.id;
+
   update_metadata(index);
   write_item(&item);
   return 0;
 };
 
 int del_item(InventoryIndex *index, int id) {
-  LOG(0, "Deleting item with id = %d", id);
   InventoryNode *node = find_item_by_id(index, id);
   if (node == NULL) {
-    LOG_ERR("Item with id = %d not found", id);
+    LOG(2, "Item with id = %d not found", id);
     return -1;
   }
   int res = delete_inventory_item_by_id(index->head, id);
@@ -133,6 +139,7 @@ int del_item(InventoryIndex *index, int id) {
   if (!delete_file(filepath)) {
     LOG_ERR("Error deleting file %s", filepath);
   };
+  LOG(0, "Deleting item with id = %d", id);
   return 0;
 }
 

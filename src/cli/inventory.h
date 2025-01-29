@@ -3,6 +3,6 @@
 
 #include "../inventory/inventory.h"
 
-struct InventoryItem *read_inventory_item(struct InventoryNode *head) ;
+InventoryItem *read_inventory_item() ;
 
 #endif

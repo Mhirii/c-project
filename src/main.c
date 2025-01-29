@@ -1,5 +1,6 @@
 #include "cli/inventory.c"
 #include "cli/menu.c"
+#include "cli/menu.h"
 #include "config/config.c"
 #include "inventory/inventory.c"
 #include "inventory/inventory.h"
@@ -47,15 +48,10 @@ int main() {
   Config *config = malloc(sizeof(Config));
   load_config("config.json");
   LOG(1, "Loaded Config");
-
   InventoryIndex *index = read_inventory_index();
   LOG(1, "Loaded inventory index");
 
-  InventoryItem item1 = {1, "Product G", 19.99, 100, 20, 123, 1};
-  update_item(index, 1, item1);
-  inventory_display_all(index->head, 0);
-  del_item(index, 3);
-  LOG(1, "Index size: %d", index->size);
+  main_menu(index);
 
   free(config);
   return 0;
