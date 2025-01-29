@@ -76,8 +76,8 @@ int parse_config(const char **buffer, Config *config) {
   return *isErr == 1 ? 0 : 1;
 }
 
-int load_config(char *config_file_path, Config *config) {
-  memcpy(config, &DefaultConfig, sizeof(Config));
+int load_config(char *config_file_path) {
+  memcpy(&config, &DefaultConfig, sizeof(Config));
   LOG(0, "Loading config file: %s", config_file_path);
 
   long file_size;
@@ -87,7 +87,7 @@ int load_config(char *config_file_path, Config *config) {
   }
 
   const char *ptr = buffer;
-  parse_config(&ptr, config);
+  parse_config(&ptr, &config);
 
   free((void *)buffer);
   return 1;

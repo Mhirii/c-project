@@ -62,6 +62,7 @@ int append_item(InventoryIndex *index, InventoryItem item) {
   inventory_append(index->head, item);
   index->last_id = item.id;
   index->size++;
+  write_item(&item);
   return 0;
 };
 

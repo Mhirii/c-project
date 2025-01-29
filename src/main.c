@@ -44,9 +44,15 @@ void example() {
 int main() {
   LOG(1, "Starting program");
   Config *config = malloc(sizeof(Config));
-  load_config("config.json", config);
+  load_config("config.json");
 
-  InventoryIndex *index = read_inventory_index("data");
+  InventoryIndex *index = read_inventory_index();
+  InventoryItem item1 = {1, "Product C", 19.99, 100, 20, 123, 1};
+  InventoryItem item2 = {2, "Product D", 29.99, 50, 10, 456, 1};
+  append_item(index, item1);
+  append_item(index, item2);
+  inventory_display_all(index->head, 0);
+  free_inventory_index(index);
 
   // main_menu(config);
 

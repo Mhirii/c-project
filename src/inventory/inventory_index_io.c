@@ -14,9 +14,11 @@
     return -1;                                                                 \
   }
 
-InventoryIndex *read_inventory_index(char *path) {
+InventoryIndex *read_inventory_index() {
   LOG(0, "Reading inventory index");
   // TODO: check if path is valid and has the needed files.
+  char *path = malloc(strlen(config.data_path) + 1);
+  path = strcpy(path, config.data_path);
 
   InventoryIndex *index = init_inventory_index();
 
@@ -27,6 +29,8 @@ InventoryIndex *read_inventory_index(char *path) {
   if (res == -1) {
     LOG_ERR("Error occurred while parsing metadata file");
     free_inventory_index(index);
+    free(path);
+    free(metadata);
     return NULL;
   }
 
@@ -34,6 +38,9 @@ InventoryIndex *read_inventory_index(char *path) {
   if (res == -1) {
     LOG_ERR("Error reading items");
     free_inventory_index(index);
+    free(metadata);
+    free(path);
+    free(index);
     return NULL;
   }
 
@@ -144,7 +151,7 @@ int read_items(char *path, InventoryIndex *index) {
 int write_items(char *path, InventoryIndex *index) {
   InventoryNode *head = index->head;
   while (head != NULL) {
-    if (!write_item(head->data.name, &head->data)) {
+    if (!write_item(&head->data)) {
       LOG_ERR("Failed to write item file %s", head->data.name);
       return -1;
     };
@@ -242,10 +249,14 @@ char *serialize_inventory_item(InventoryItem item) {
   return json;
 }
 
-int write_item(char *path, InventoryItem *item) {
+int write_item(InventoryItem *item) {
+  char *path = malloc(strlen(config.data_path) + 1);
+  path = strcpy(path, config.data_path);
+
   char *buffer = serialize_inventory_item(*item);
   if (!buffer) {
     LOG_ERR("Failed to serialize item");
+    free(path);
     return -1;
   }
 
@@ -253,6 +264,7 @@ int write_item(char *path, InventoryItem *item) {
   free(buffer);
 
   if (result == -1) {
+    free(path);
     LOG_ERR("Failed to write item file");
   }
   return result;
