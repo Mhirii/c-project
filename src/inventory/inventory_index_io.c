@@ -5,6 +5,7 @@
 #include "../lib/lib.h"
 #include "inventory.h"
 #include <dirent.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -250,8 +251,18 @@ char *serialize_inventory_item(InventoryItem item) {
 }
 
 int write_item(InventoryItem *item) {
-  char *path = malloc(strlen(config.data_path) + 1);
-  path = strcpy(path, config.data_path);
+
+  char *filename;
+  if (!sprintf(filename, "%d.json", item->id)) {
+    LOG_ERR("Error while formatting filename");
+    return -1;
+  }
+
+  char *path;
+  if (!sprintf(path, "%s/%s", config.data_path, filename)) {
+    LOG_ERR("Error while path to save item");
+    return -1;
+  }
 
   char *buffer = serialize_inventory_item(*item);
   if (!buffer) {

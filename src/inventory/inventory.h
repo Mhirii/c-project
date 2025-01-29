@@ -72,5 +72,6 @@ void update_stock_quantity(InventoryNode *head, int id, int quantity_change);
  * @return          Pointer to the new head of the inventory list
  */
 InventoryNode *inventory_from_json(InventoryNode *head, char *json);
+char *serialize_inventory_item(InventoryItem item);
 
 #endif
