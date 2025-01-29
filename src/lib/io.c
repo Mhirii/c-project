@@ -67,3 +67,16 @@ int write_file(const char *file_path, char *buffer) {
   fclose(file);
   return 1;
 }
+
+int delete_file(const char *file_path) {
+  if (!file_path) {
+    LOG_ERR("File path is NULL");
+    return 0;
+  }
+
+  if (remove(file_path) != 0) {
+    LOG_ERR("Failed to delete file %s", file_path);
+    return 0;
+  }
+  return 1;
+}

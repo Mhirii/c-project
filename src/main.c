@@ -54,6 +54,7 @@ int main() {
   InventoryItem item1 = {1, "Product G", 19.99, 100, 20, 123, 1};
   update_item(index, 1, item1);
   inventory_display_all(index->head, 0);
+  del_item(index, 3);
   LOG(1, "Index size: %d", index->size);
 
   free(config);

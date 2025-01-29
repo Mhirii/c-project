@@ -40,8 +40,6 @@ int update_metadata(InventoryIndex *index) {
   strcpy(data_path, config.data_path);
   char *path = strcat(data_path, "/metadata");
 
-  LOG(0, "Updating metadata with size = %d and last_id = %d", index->size,
-      index->last_id);
   if (write_metadata(path, index) != 0) {
     LOG_ERR("Error writing updated metadata");
     return -1;
@@ -106,6 +104,7 @@ int append_item(InventoryIndex *index, InventoryItem item) {
 };
 
 int del_item(InventoryIndex *index, int id) {
+  LOG(0, "Deleting item with id = %d", id);
   InventoryNode *node = find_item_by_id(index, id);
   if (node == NULL) {
     LOG_ERR("Item with id = %d not found", id);
@@ -118,6 +117,22 @@ int del_item(InventoryIndex *index, int id) {
   }
 
   index->size--;
+  if (update_metadata(index) != 0) {
+    LOG_ERR("Error updating metadata");
+    return -1;
+  }
+
+  char *data_path = malloc(strlen(config.data_path) + strlen("/metadata") + 1);
+  strcpy(data_path, config.data_path);
+  char *filepath = strcat(data_path, "/");
+  char id_str[32];
+  sprintf(id_str, "%d", id);
+  strcat(filepath, id_str);
+  strcat(filepath, ".json");
+
+  if (!delete_file(filepath)) {
+    LOG_ERR("Error deleting file %s", filepath);
+  };
   return 0;
 }
 
