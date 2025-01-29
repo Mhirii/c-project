@@ -31,23 +31,25 @@ char *level_to_string(enum log_levels level) {
 char *color_level(enum log_levels level) {
   switch (level) {
   case DEBUG:
-    return "\033[30;43mDEBUG\033[0m"; // Black text on orange background for
-                                      // debug level
+    return "\033[36m DEBUG \033[0m"; // Cyan for debug level
     break;
   case INFO:
-    return "\033[32mINFO \033[0m"; // Green for normal info
+    return "\033[32m INFO  \033[0m"; // Green for normal info
     break;
   case WARN:
-    return "\033[33mWARN \033[0m"; // Yellow for warnings
+    return "\033[30;43m WARN \033[0m"; // Black text on orange background for
+                                       // warnings
     break;
   case ERROR:
-    return "\033[91mERROR\033[0m"; // Bright red for errors
+    return "\033[30;41m ERROR \033[0m"; // Black text on red background for
+                                        // errors
     break;
   case FATAL:
-    return "\033[97;41mFATAL\033[0m"; // White text on red background for fatal
+    return "\033[97;41m FATAL \033[0m"; // White text on red background for
+                                        // fatal
     break;
   }
-  return "\033[37mUNKNOWN\033[0m";
+  return "\033[37m UNKNOWN \033[0m";
 }
 
 int print_log(struct Log *log) {

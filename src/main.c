@@ -7,6 +7,7 @@
 #include "inventory/inventory_index_io.c"
 #include "inventory/inventory_json.c"
 #include "lib/lib.c"
+#include "lib/log.h"
 #include "json/json.c"
 
 void example() {
@@ -45,16 +46,14 @@ int main() {
   LOG(1, "Starting program");
   Config *config = malloc(sizeof(Config));
   load_config("config.json");
+  LOG(0, "Loaded Config");
 
   InventoryIndex *index = read_inventory_index();
-  InventoryItem item1 = {1, "Product C", 19.99, 100, 20, 123, 1};
-  InventoryItem item2 = {2, "Product D", 29.99, 50, 10, 456, 1};
-  append_item(index, item1);
-  append_item(index, item2);
-  inventory_display_all(index->head, 0);
-  free_inventory_index(index);
+  LOG(0, "Loaded inventory index");
 
-  // main_menu(config);
+  InventoryItem item1 = {1, "Product C", 19.99, 100, 20, 123, 1};
+  append_item(index, item1);
+  inventory_display_all(index->head, 0);
 
   free(config);
   return 0;

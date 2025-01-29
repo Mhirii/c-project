@@ -66,7 +66,6 @@ int parse_config(const char **buffer, Config *config) {
     free(key);
 
     skip_whitespace(buffer);
-    LOG(0, "Buffer: %s", *buffer);
     if (**buffer != '}') {
       CHECK_ERROR((!parse_json_value_separator(buffer)),
                   "Failed to parse value separator");

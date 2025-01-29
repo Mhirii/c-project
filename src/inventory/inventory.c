@@ -37,7 +37,8 @@ InventoryNode *inventory_append(InventoryNode *head, InventoryItem item) {
   new_node->next = NULL;
 
   if (head == NULL) {
-    return new_node;
+    head = new_node;
+    return head;
   }
 
   InventoryNode *current = head;

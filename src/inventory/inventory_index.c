@@ -59,10 +59,29 @@ int free_inventory_index(InventoryIndex *index) {
 }
 
 int append_item(InventoryIndex *index, InventoryItem item) {
-  inventory_append(index->head, item);
+  InventoryNode *new_node = (InventoryNode *)malloc(sizeof(InventoryNode));
+  if (new_node == NULL) {
+    LOG_ERR("Error allocating memory for new node");
+    return -1;
+  }
+
+  new_node->data = item;
+  new_node->next = NULL;
+
+  if (index->head == NULL) {
+    index->head = new_node;
+  } else {
+    InventoryNode *current = index->head;
+    while (current->next != NULL) {
+      current = current->next;
+    }
+    current->next = new_node;
+  }
   index->last_id = item.id;
   index->size++;
+  LOG(0, "Writing item");
   write_item(&item);
+  LOG(0, "item writen");
   return 0;
 };
 

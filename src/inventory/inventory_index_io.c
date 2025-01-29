@@ -34,6 +34,7 @@ InventoryIndex *read_inventory_index() {
     free(metadata);
     return NULL;
   }
+  LOG(0, "Done parsing metadata");
 
   res = read_items(path, index);
   if (res == -1) {
@@ -45,6 +46,7 @@ InventoryIndex *read_inventory_index() {
     return NULL;
   }
 
+  LOG(0, "Done parsing metadata");
   LOG(1, "Inventory index read");
   return index;
 }
@@ -116,10 +118,26 @@ int ls_json_files(const char *path, char **files) {
   while ((entry = readdir(dir)) != NULL) {
     const char *ext = strrchr(entry->d_name, '.');
     if (ext && strcmp(ext, ".json") == 0) {
+      if (files == NULL) {
+        LOG_ERR("files array is NULL");
+        continue;
+      }
+
       char *full_path = malloc(strlen(path) + strlen(entry->d_name) +
-                               2); // +2 : '/' + null terminator
-      sprintf(full_path, "%s/%s", path, entry->d_name);
-      files[i++] = full_path;
+                               2); // +2 for '/' and null terminator
+      if (full_path == NULL) {
+        LOG_ERR("Failed to allocate memory for full path");
+        continue;
+      }
+
+      if (sprintf(full_path, "%s/%s", path, entry->d_name) < 0) {
+        LOG_ERR("Error occurred while formatting full_path, name = %s",
+                entry->d_name);
+        free(full_path);
+      } else {
+        files[i] = full_path;
+        i++;
+      };
     }
   }
 
@@ -129,15 +147,18 @@ int ls_json_files(const char *path, char **files) {
 }
 
 int read_items(char *path, InventoryIndex *index) {
-  char **json_files = NULL;
+  char **json_files = malloc(32 * sizeof(char *));
   int files_count = ls_json_files(path, json_files);
+  LOG(0, "file count %d", files_count);
   for (int i = 0; i < files_count; i++) {
+
+    LOG(0, "file %s", (json_files[i]));
     InventoryItem item;
     if (read_item(json_files[i], &item) == -1) {
       LOG_ERR("Failed to read item file %s", json_files[i]);
       continue;
     }
-    if (!append_item(index, item)) {
+    if (append_item(index, item) != 0) {
       LOG_ERR("Failed to append item to index, file is %s", json_files[i]);
       if (item.name)
         free(item.name);
@@ -252,13 +273,13 @@ char *serialize_inventory_item(InventoryItem item) {
 
 int write_item(InventoryItem *item) {
 
-  char *filename;
-  if (!sprintf(filename, "%d.json", item->id)) {
+  char filename[64];
+  if (sprintf(filename, "%d.json", item->id) < 0) {
     LOG_ERR("Error while formatting filename");
     return -1;
   }
 
-  char *path;
+  char *path = malloc(strlen(config.data_path) + strlen(filename) + 2);
   if (!sprintf(path, "%s/%s", config.data_path, filename)) {
     LOG_ERR("Error while path to save item");
     return -1;
