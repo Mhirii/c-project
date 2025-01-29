@@ -38,6 +38,7 @@ InventoryNode **search_items_by_supplier_id(InventoryIndex *index,
 
 InventoryIndex *read_inventory_index();
 int parse_metadata(char *path, InventoryIndex *index);
+int write_metadata(char *path, InventoryIndex *index);
 int read_items(char *path, InventoryIndex *index);
 int write_items(char *path, InventoryIndex *index);
 int read_item(char *path, InventoryItem *item);

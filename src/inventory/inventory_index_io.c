@@ -16,7 +16,6 @@
   }
 
 InventoryIndex *read_inventory_index() {
-  LOG(0, "Reading inventory index");
   // TODO: check if path is valid and has the needed files.
   char *path = malloc(strlen(config.data_path) + 1);
   path = strcpy(path, config.data_path);
@@ -34,7 +33,6 @@ InventoryIndex *read_inventory_index() {
     free(metadata);
     return NULL;
   }
-  LOG(0, "Done parsing metadata");
 
   res = read_items(path, index);
   if (res == -1) {
@@ -46,7 +44,6 @@ InventoryIndex *read_inventory_index() {
     return NULL;
   }
 
-  LOG(0, "Done parsing metadata");
   LOG(1, "Inventory index read");
   return index;
 }
@@ -149,10 +146,8 @@ int ls_json_files(const char *path, char **files) {
 int read_items(char *path, InventoryIndex *index) {
   char **json_files = malloc(32 * sizeof(char *));
   int files_count = ls_json_files(path, json_files);
-  LOG(0, "file count %d", files_count);
   for (int i = 0; i < files_count; i++) {
 
-    LOG(0, "file %s", (json_files[i]));
     InventoryItem item;
     if (read_item(json_files[i], &item) == -1) {
       LOG_ERR("Failed to read item file %s", json_files[i]);

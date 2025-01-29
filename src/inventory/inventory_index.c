@@ -1,5 +1,6 @@
 #include "../lib/lib.h"
 #include "inventory.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -33,6 +34,21 @@ int comp_name(InventoryItem *item, char *name) {
 
   return 0;
 }
+
+int update_metadata(InventoryIndex *index) {
+  char *data_path = malloc(strlen(config.data_path) + strlen("/metadata") + 1);
+  strcpy(data_path, config.data_path);
+  char *path = strcat(data_path, "/metadata");
+
+  LOG(0, "Updating metadata with size = %d and last_id = %d", index->size,
+      index->last_id);
+  if (write_metadata(path, index) != 0) {
+    LOG_ERR("Error writing updated metadata");
+    return -1;
+  };
+  return 0;
+}
+
 InventoryIndex *init_inventory_index() {
   InventoryIndex *index = (InventoryIndex *)malloc(sizeof(InventoryIndex));
   index->head = NULL;
@@ -59,6 +75,11 @@ int free_inventory_index(InventoryIndex *index) {
 }
 
 int append_item(InventoryIndex *index, InventoryItem item) {
+  if (item.id >= 0 && (!check_id_availability(index->head, item.id))) {
+    LOG_ERR("tried to add item with id = %d, but it already exists", item.id);
+    return -1;
+  }
+
   InventoryNode *new_node = (InventoryNode *)malloc(sizeof(InventoryNode));
   if (new_node == NULL) {
     LOG_ERR("Error allocating memory for new node");
@@ -77,11 +98,10 @@ int append_item(InventoryIndex *index, InventoryItem item) {
     }
     current->next = new_node;
   }
-  index->last_id = item.id;
   index->size++;
-  LOG(0, "Writing item");
+  index->last_id = item.id;
+  update_metadata(index);
   write_item(&item);
-  LOG(0, "item writen");
   return 0;
 };
 
@@ -101,7 +121,24 @@ int del_item(InventoryIndex *index, int id) {
   return 0;
 }
 
-int update_item(InventoryIndex *index, int id, InventoryItem item);
+int update_item(InventoryIndex *index, int id, InventoryItem item) {
+  if (index == NULL || index->head == NULL) {
+    return -1;
+  }
+
+  InventoryNode *current = index->head;
+  while (current != NULL) {
+    if (current->data.id == id) {
+      item.id = id;
+      current->data = item;
+      write_item(&item);
+      return 0;
+    }
+    current = current->next;
+  }
+
+  return -1;
+}
 
 InventoryNode *find_item_by_id(InventoryIndex *index, int id) {
   InventoryNode *current = index->head;

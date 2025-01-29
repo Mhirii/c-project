@@ -10,7 +10,7 @@
 char global_log_file_path[MAX_NAME_LENGTH];
 
 int parse_config(const char **buffer, Config *config) {
-  LOG(0, "Initiating Config Parser");
+  LOG(1, "Initiating Config Parser");
   int *isErr = malloc(sizeof(int));
   // Config *config = (Config *)malloc(sizeof(Config));
 
@@ -31,12 +31,10 @@ int parse_config(const char **buffer, Config *config) {
     if (strcmp(key, "low_stock_threshold") == 0) {
       CHECK_ERROR((!parse_json_number(buffer, &config->low_stock_threshold)),
                   "Failed to parse low_stock_threshold");
-      LOG(0, "low_stock_threshold: %d", config->low_stock_threshold);
 
     } else if (strcmp(key, "auto_reorder") == 0) {
       CHECK_ERROR((!parse_json_number(buffer, &config->auto_reorder)),
                   "Failed to parse auto_reorder");
-      LOG(0, "auto_reorder: %d", config->auto_reorder);
 
     } else if (strcmp(key, "log_file_path") == 0) {
       char *log_path = NULL;
@@ -50,14 +48,11 @@ int parse_config(const char **buffer, Config *config) {
       global_log_file_path[MAX_NAME_LENGTH - 1] = '\0';
 
       free(log_path);
-      LOG(0, "log_file_path: %s", config->log_file_path);
 
     } else if (strcmp(key, "report_generation_frequency") == 0) {
       CHECK_ERROR(
           (!parse_json_number(buffer, &config->report_generation_frequency)),
           "Failed to parse report_generation_frequency");
-      LOG(0, "report_generation_frequency: %d",
-          config->report_generation_frequency);
 
     } else {
       LOG_ERR("Unknown key: %s, SKIPPING", key);
@@ -77,7 +72,7 @@ int parse_config(const char **buffer, Config *config) {
 
 int load_config(char *config_file_path) {
   memcpy(&config, &DefaultConfig, sizeof(Config));
-  LOG(0, "Loading config file: %s", config_file_path);
+  LOG(1, "Loading config file: %s", config_file_path);
 
   long file_size;
   char *buffer;

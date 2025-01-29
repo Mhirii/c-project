@@ -176,6 +176,13 @@ void check_low_stock(InventoryNode *head, Config *config);
 
 void update_stock_quantity(InventoryNode *head, int id, int quantity_change);
 
+/**
+ * @brief Checks if a given ID is already in use in the inventory
+ *
+ * @param head Pointer to the head of the inventory linked list
+ * @param id ID to check for availability
+ * @return int Returns 1 if ID is available (not found), 0 if ID already exists
+ */
 int check_id_availability(InventoryNode *head, int id) {
   InventoryNode *current = head;
   while (current != NULL) {
