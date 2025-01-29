@@ -13,10 +13,10 @@ char *level_to_string(enum log_levels level) {
     return "DEBUG";
     break;
   case INFO:
-    return "INFO";
+    return "INFO ";
     break;
   case WARN:
-    return "WARN";
+    return "WARN ";
     break;
   case ERROR:
     return "ERROR";
@@ -26,6 +26,28 @@ char *level_to_string(enum log_levels level) {
     break;
   }
   return "UNKNOWN";
+}
+
+char *color_level(enum log_levels level) {
+  switch (level) {
+  case DEBUG:
+    return "\033[30;43mDEBUG\033[0m"; // Black text on orange background for
+                                      // debug level
+    break;
+  case INFO:
+    return "\033[32mINFO \033[0m"; // Green for normal info
+    break;
+  case WARN:
+    return "\033[33mWARN \033[0m"; // Yellow for warnings
+    break;
+  case ERROR:
+    return "\033[91mERROR\033[0m"; // Bright red for errors
+    break;
+  case FATAL:
+    return "\033[97;41mFATAL\033[0m"; // White text on red background for fatal
+    break;
+  }
+  return "\033[37mUNKNOWN\033[0m";
 }
 
 int print_log(struct Log *log) {
@@ -42,12 +64,19 @@ int print_log(struct Log *log) {
       strlen(log->timestamp) + strlen(level) + strlen(log->message) + 6;
 
   char *log_line = malloc(log_line_size);
+  char *colored_log_line = malloc(log_line_size + 20);
+
   if (!log_line) {
     return -1;
   }
 
   if (snprintf(log_line, log_line_size, "[%s] %s  %s\n", log->timestamp, level,
                log->message) < 0) {
+    free(log_line);
+    return -1;
+  }
+  if (snprintf(colored_log_line, log_line_size + 20, "[%s] %s  %s\n",
+               log->timestamp, color_level(log->level), log->message) < 0) {
     free(log_line);
     return -1;
   }
@@ -60,13 +89,14 @@ int print_log(struct Log *log) {
 
   fprintf(log_file, "%s\n", log_line);
   if (log->level >= 3) {
-    fprintf(stderr, "%s\n", log_line);
+    fprintf(stderr, "%s\n", colored_log_line);
   } else {
-    printf("%s\n", log_line);
+    printf("%s\n", colored_log_line);
   }
 
   fclose(log_file);
   free(log_line);
+  free(colored_log_line);
   return 0;
 }
 
