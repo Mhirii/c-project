@@ -9,6 +9,8 @@
 #include "inventory/inventory_json.c"
 #include "lib/lib.c"
 #include "lib/log.h"
+#include "memo/memo.c"
+#include "memo/memo.h"
 #include "supplier/supplier.c"
 #include "supplier/supplier.h"
 #include "json/json.c"
@@ -18,12 +20,10 @@ int main() {
   Config *config = malloc(sizeof(Config));
   load_config("config.json");
   LOG(1, "Loaded Config");
-  InventoryIndex *index = read_inventory_index();
-  LOG(1, "Loaded inventory index");
-  SupplierList *suppliers = read_supplier_list();
-  LOG(1, "Loaded suppliers list");
+  Memo *memo = malloc(sizeof(Memo));
+  memo_init(memo);
 
-  main_menu(index, suppliers);
+  main_menu(memo);
 
   free(config);
   return 0;

@@ -3,8 +3,16 @@
 #include "input.h"
 #include <stdio.h>
 
+#define PRESS_ENTER_TO_CONTINUE()                                              \
+  do {                                                                         \
+    printf("\nPress enter to continue...");                                    \
+    while (getchar() != '\n')                                                  \
+      ;                                                                        \
+    getchar();                                                                 \
+  } while (0)
+
 void menu();
-void main_menu(InventoryIndex *index, SupplierList *list) {
+void main_menu(Memo *memo) {
   char choice = '9';
   while (choice != '0') {
     printf("\n\n");
@@ -18,10 +26,10 @@ void main_menu(InventoryIndex *index, SupplierList *list) {
     scanf("%c", &choice);
     switch (choice) {
     case '1':
-      inventory_management(index);
+      inventory_management(memo->inventory);
       break;
     case '2':
-      supplier_management(list);
+      supplier_management(memo->suppliers);
     case '3':
       choice = '0';
       break;
@@ -57,6 +65,7 @@ void inventory_management(InventoryIndex *index) {
       break;
     case '3':
       inventory_display_all(index->head, 0);
+      PRESS_ENTER_TO_CONTINUE();
       break;
     case '4':
       choice = '0';
@@ -93,6 +102,7 @@ void supplier_management(SupplierList *list) {
       break;
     case '3':
       supplier_display_all(list->head, 0);
+      PRESS_ENTER_TO_CONTINUE();
       break;
     case '4':
       choice = '0';
