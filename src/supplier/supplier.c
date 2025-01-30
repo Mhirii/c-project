@@ -7,6 +7,48 @@
 #include "util.c"
 #include <stdlib.h>
 
+int validate_supp_string(char *str) {
+  if (str == NULL || strlen(str) > MAX_STRING_LENGTH) {
+    LOG_ERR("String is not valid");
+    return 0;
+  }
+  return 1;
+}
+
+Supplier *new_supplier(int id, char *first_name, char *last_name, char *email,
+                       char *phone) {
+  Supplier *supp = (Supplier *)malloc(sizeof(Supplier));
+
+  if (supp == NULL) {
+    return NULL;
+    LOG_ERR("Error allocating memory for new supplier");
+  }
+
+  if (!validate_supp_string(first_name)) {
+    free(supp);
+    return NULL;
+  }
+  if (!validate_supp_string(last_name)) {
+    free(supp);
+    return NULL;
+  }
+  if (!validate_supp_string(email)) {
+    free(supp);
+    return NULL;
+  }
+  if (!validate_supp_string(phone)) {
+    free(supp);
+    return NULL;
+  }
+
+  supp->id = id;
+  supp->first_name = first_name;
+  supp->last_name = last_name;
+  supp->email = email;
+  supp->phone = phone;
+  return supp;
+}
+
 SupplierList *init_supplier_list() {
   SupplierList *supp = (SupplierList *)malloc(sizeof(SupplierList));
   supp->head = NULL;
@@ -129,4 +171,72 @@ SupplierNode *find_supp_by_id(SupplierList *list, int id) {
     current = current->next;
   }
   return NULL;
+}
+
+SupplierList *read_supplier_list() {
+  char *path = malloc(strlen(config.data_path) + strlen("/supplier") + 1);
+  path = strcpy(path, config.data_path);
+  path = strcat(path, "/supplier");
+
+  SupplierList *list = init_supplier_list();
+
+  char *metadata = malloc(strlen(path) + strlen("/metadata") + 1);
+  sprintf(metadata, "%s/metadata", path);
+
+  int res = parse_supp_metadata(metadata, list);
+  if (res == -1) {
+    LOG_ERR("Error occurred while parsing supplier metadata file");
+    free_supplier_list(list);
+    free(path);
+    free(metadata);
+    return NULL;
+  }
+
+  res = read_suppliers(path, list);
+  if (res == -1) {
+    LOG_ERR("Error reading items");
+    free_supplier_list(list);
+    free(metadata);
+    free(path);
+    free(list);
+    return NULL;
+  }
+
+  LOG(1, "Supplier list successfully read");
+  return list;
+}
+
+void display_supplier(Supplier *supp) {
+  if (supp == NULL) {
+    LOG_ERR("Cannot display NULL item");
+    return;
+  }
+
+  printf("ID:            %d\n", supp->id);
+  printf("First Name:    %s\n", supp->first_name);
+  printf("Last Name:     %s\n", supp->last_name);
+  printf("Email:         %s\n", supp->email);
+  printf("Phone:         %s\n", supp->phone);
+}
+
+void supplier_display_all(SupplierNode *head, int minimal) {
+  if (head == NULL) {
+    LOG_ERR("Cannot display empty list");
+    return;
+  }
+
+  SupplierNode *current = head;
+  while (current != NULL) {
+    if (minimal == 0) {
+      printf("\n---------------- ----------------\n\n");
+      display_supplier(&current->supplier);
+      if (current->next == NULL)
+        printf("\n---------------- ----------------\n\n");
+
+    } else {
+      printf("%d: %s %s\n", current->supplier.id, current->supplier.first_name,
+             current->supplier.last_name);
+    }
+    current = current->next;
+  }
 }

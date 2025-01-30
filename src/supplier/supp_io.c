@@ -1,6 +1,7 @@
 #include "../config/config.h"
 #include "../json/json.h"
 #include "../lib/lib.h"
+#include "node.c"
 #include "supplier.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,10 +20,10 @@ char *serialize_supp(Supplier supp) {
   strcpy(json, "{");
 
   append_json_number_pair(&json, "id", supp.id);
-  append_json_string_pair(&json, "name", supp.first_name);
-  append_json_string_pair(&json, "name", supp.last_name);
-  append_json_string_pair(&json, "name", supp.email);
-  append_json_string_pair(&json, "name", supp.phone);
+  append_json_string_pair(&json, "first_name", supp.first_name);
+  append_json_string_pair(&json, "last_name", supp.last_name);
+  append_json_string_pair(&json, "email", supp.email);
+  append_json_string_pair(&json, "phone", supp.phone);
 
   json = realloc(json, strlen(json) + 2);
   strcat(json, "}");
@@ -116,5 +117,27 @@ int read_supp(char *path, Supplier *supp) {
 
   CHK_ERR((!parse_json_object_end(&ptr)), "Failed to parse object end");
 
+  return 0;
+}
+
+int read_suppliers(char *path, SupplierList *list) {
+  char **json_files = malloc(32 * sizeof(char *));
+  int files_count = ls_json_files(path, json_files);
+  for (int i = 0; i < files_count; i++) {
+
+    Supplier supp;
+    if (read_supp(json_files[i], &supp) == -1) {
+      LOG_ERR("Failed to read supplier file %s", json_files[i]);
+      continue;
+    }
+    if (append_supplier(list, supp) != 0) {
+      LOG_ERR("Failed to append supplier to list, file is %s", json_files[i]);
+      if (supp.first_name)
+        free_supp(&supp);
+      continue;
+    }
+    free(json_files[i]);
+  }
+  free(json_files);
   return 0;
 }

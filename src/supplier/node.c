@@ -1,4 +1,6 @@
 
+#ifndef SUPPLIER_NODE_C
+#define SUPPLIER_NODE_C
 #include "supplier.h"
 #include <stdlib.h>
 #include <time.h>
@@ -49,3 +51,5 @@ int delete_supp_by_id(SupplierNode *head, int id) {
   }
   return found;
 }
+
+#endif
