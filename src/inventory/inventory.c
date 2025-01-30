@@ -4,17 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-InventoryNode *new_inventory() {
-  InventoryNode *node = (InventoryNode *)malloc(sizeof(InventoryNode));
-
-  if (node == NULL) {
-    LOG_ERR("Error allocating memory for new node");
-    return NULL;
-  }
-  node->next = NULL;
-  return node;
-}
-
 void delete_inventory(InventoryNode *head) {
   InventoryNode *current = head;
   InventoryNode *next;
@@ -127,13 +116,6 @@ int delete_inventory_item_by_id(InventoryNode *head, int id) {
   }
   return found;
 }
-
-InventoryNode *inventory_update(InventoryNode *head, int id,
-                                InventoryItem new_data);
-
-InventoryNode *inventory_delete(InventoryNode *head, int id);
-
-InventoryItem *inventory_find(InventoryNode *head, int id);
 
 void inventory_display_all(InventoryNode *head, int minimal) {
   if (head == NULL) {

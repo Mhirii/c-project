@@ -44,20 +44,13 @@ int write_items(char *path, InventoryIndex *index);
 int read_item(char *path, InventoryItem *item);
 int write_item(InventoryItem *item);
 
-InventoryNode *new_inventory();
 void delete_inventory(InventoryNode *head);
 int delete_inventory_item_by_id(InventoryNode *head, int id);
 
 InventoryItem *new_inventory_item(int id, char *name, double price,
                                   int quantity, int reorder_level,
                                   int supplier_id);
-void delete_inventory_item(InventoryItem *item);
 
-InventoryNode *inventory_append(InventoryNode *head, InventoryItem item);
-InventoryNode *inventory_update(InventoryNode *head, int id,
-                                InventoryItem new_data);
-InventoryNode *inventory_delete(InventoryNode *head, int id);
-InventoryItem *inventory_find(InventoryNode *head, int id);
 void inventory_display_all(InventoryNode *head, int minimal);
 void inventory_display_item(InventoryItem *item);
 int check_id_availability(InventoryNode *head, int id);
