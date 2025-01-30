@@ -50,6 +50,7 @@ int delete_inventory_item_by_id(InventoryNode *head, int id);
 InventoryItem *new_inventory_item(int id, char *name, double price,
                                   int quantity, int reorder_level,
                                   int supplier_id);
+void delete_inventory_item(InventoryItem *item);
 
 void inventory_display_all(InventoryNode *head, int minimal);
 void inventory_display_item(InventoryItem *item);

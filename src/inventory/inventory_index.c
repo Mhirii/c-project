@@ -128,7 +128,7 @@ int del_item(InventoryIndex *index, int id) {
     return -1;
   }
 
-  char *data_path = malloc(strlen(config.data_path) + strlen("/metadata") + 1);
+  char *data_path = malloc(strlen(config.data_path) + strlen(".json") + 6);
   strcpy(data_path, config.data_path);
   char *filepath = strcat(data_path, "/");
   char id_str[32];
