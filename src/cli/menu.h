@@ -10,7 +10,7 @@
 
 void menu();
 void main_menu(Memo *memo);
-void inventory_management(InventoryIndex *index);
-void supplier_management(SupplierList *list);
+void inventory_management(Memo *m);
+void supplier_management(Memo *m);
 
 #endif

@@ -20,8 +20,10 @@ int main() {
   Config *config = malloc(sizeof(Config));
   load_config("config.json");
   LOG(1, "Loaded Config");
+
   Memo *memo = malloc(sizeof(Memo));
   memo_init(memo);
+  inventory_display_all(memo->inventory->head, 0);
 
   main_menu(memo);
 

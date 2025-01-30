@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "../lib/lib.h"
+#include "../memo/inv_supp.c"
 #include "input.h"
 #include <stdio.h>
 
@@ -26,10 +27,10 @@ void main_menu(Memo *memo) {
     scanf("%c", &choice);
     switch (choice) {
     case '1':
-      inventory_management(memo->inventory);
+      inventory_management(memo);
       break;
     case '2':
-      supplier_management(memo->suppliers);
+      supplier_management(memo);
     case '3':
       choice = '0';
       break;
@@ -40,7 +41,8 @@ void main_menu(Memo *memo) {
   }
 }
 
-void inventory_management(InventoryIndex *index) {
+void inventory_management(Memo *m) {
+  InventoryIndex *index = m->inventory;
   char choice = '9';
   while (choice != '0') {
     printf("\n\n");
@@ -77,7 +79,8 @@ void inventory_management(InventoryIndex *index) {
   }
 }
 
-void supplier_management(SupplierList *list) {
+void supplier_management(Memo *m) {
+  SupplierList *list = m->suppliers;
   char choice = '9';
   while (choice != '0') {
     printf("\n\n");
@@ -86,7 +89,8 @@ void supplier_management(SupplierList *list) {
     printf("1. Add Supplier\n");
     printf("2. Remove Supplier\n");
     printf("3. List Suppliers\n");
-    printf("4. Exit\n");
+    printf("4. Supplier Inventory\n");
+    printf("5. Exit\n");
     printf("\n");
     printf("Enter your choice: ");
     scanf(" %c", &choice);
@@ -105,6 +109,18 @@ void supplier_management(SupplierList *list) {
       PRESS_ENTER_TO_CONTINUE();
       break;
     case '4':
+      printf("Enter item id: ");
+      int search_id;
+      scanf("%d", &search_id);
+      InventoryNode *n = get_products_by_supplier(m, search_id);
+      if (n != NULL) {
+        inventory_display_all(n, 0);
+      } else {
+        printf("No products found\n");
+      }
+      PRESS_ENTER_TO_CONTINUE();
+      break;
+    case '5':
       choice = '0';
       break;
     default:
