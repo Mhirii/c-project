@@ -1,5 +1,6 @@
 #include "io.h"
 #include "log.h"
+#include <dirent.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -79,4 +80,52 @@ int delete_file(const char *file_path) {
     return 0;
   }
   return 1;
+}
+
+/**
+ * @brief Lists all JSON files in a directory
+ * @param path The dir path
+ * @param files arr that stores paths of JSON files
+ * @return -1 on error or Number of JSON files found.
+ */
+int ls_json_files(const char *path, char **files) {
+  DIR *dir;
+  struct dirent *entry;
+  int i = 0;
+
+  dir = opendir(path);
+  if (dir == NULL) {
+    LOG_ERR("Unable to open directory at %s", path);
+    return -1;
+  }
+
+  while ((entry = readdir(dir)) != NULL) {
+    const char *ext = strrchr(entry->d_name, '.');
+    if (ext && strcmp(ext, ".json") == 0) {
+      if (files == NULL) {
+        LOG_ERR("files array is NULL");
+        continue;
+      }
+
+      char *full_path = malloc(strlen(path) + strlen(entry->d_name) +
+                               2); // +2 for '/' and null terminator
+      if (full_path == NULL) {
+        LOG_ERR("Failed to allocate memory for full path");
+        continue;
+      }
+
+      if (sprintf(full_path, "%s/%s", path, entry->d_name) < 0) {
+        LOG_ERR("Error occurred while formatting full_path, name = %s",
+                entry->d_name);
+        free(full_path);
+      } else {
+        files[i] = full_path;
+        i++;
+      };
+    }
+  }
+
+  closedir(dir);
+
+  return i;
 }
