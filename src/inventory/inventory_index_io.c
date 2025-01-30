@@ -17,8 +17,9 @@
 
 InventoryIndex *read_inventory_index() {
   // TODO: check if path is valid and has the needed files.
-  char *path = malloc(strlen(config.data_path) + 1);
+  char *path = malloc(strlen(config.data_path) + strlen("/inventory") + 1);
   path = strcpy(path, config.data_path);
+  path = strcat(path, "/inventory");
 
   InventoryIndex *index = init_inventory_index();
 
@@ -274,8 +275,9 @@ int write_item(InventoryItem *item) {
     return -1;
   }
 
-  char *path = malloc(strlen(config.data_path) + strlen(filename) + 2);
-  if (!sprintf(path, "%s/%s", config.data_path, filename)) {
+  char *path = malloc(strlen(config.data_path) + strlen("/inventory") +
+                      strlen(filename) + 2);
+  if (!sprintf(path, "%s/inventory/%s", config.data_path, filename)) {
     LOG_ERR("Error while path to save item");
     return -1;
   }

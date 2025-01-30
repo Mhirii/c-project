@@ -36,9 +36,10 @@ int comp_name(InventoryItem *item, char *name) {
 }
 
 int update_metadata(InventoryIndex *index) {
-  char *data_path = malloc(strlen(config.data_path) + strlen("/metadata") + 1);
+  char *data_path =
+      malloc(strlen(config.data_path) + strlen("/inventory/metadata") + 1);
   strcpy(data_path, config.data_path);
-  char *path = strcat(data_path, "/metadata");
+  char *path = strcat(data_path, "/inventory/metadata");
 
   if (write_metadata(path, index) != 0) {
     LOG_ERR("Error writing updated metadata");
@@ -128,9 +129,10 @@ int del_item(InventoryIndex *index, int id) {
     return -1;
   }
 
-  char *data_path = malloc(strlen(config.data_path) + strlen(".json") + 6);
+  char *data_path = malloc(strlen(config.data_path) + strlen("/inventory/") +
+                           strlen(".json") + 6);
   strcpy(data_path, config.data_path);
-  char *filepath = strcat(data_path, "/");
+  char *filepath = strcat(data_path, "/inventory/");
   char id_str[32];
   sprintf(id_str, "%d", id);
   strcat(filepath, id_str);
