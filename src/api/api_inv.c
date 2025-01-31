@@ -17,11 +17,30 @@ int del_inv_item(Memo *memo) {
 };
 
 int list_inv_items(Memo *memo) {
-  inventory_display_all(memo->inventory->head, 0);
+  inventory_display_all(memo->inventory->head, 1);
   PRESS_ENTER_TO_CONTINUE();
   return 0;
 };
 
-int update_inv_item(Memo *memo);
-int search_inv_item_id(Memo *memo);
+int update_inv_item(Memo *memo) {
+  printf("Enter item id: ");
+  int id;
+  if (scanf("%d", &id) != 1) {
+    return -1;
+  }
+
+  return update_item(memo->inventory, id, *read_inventory_item());
+};
+
+int search_inv_item_id(Memo *memo) {
+  printf("Enter item id: ");
+  int id;
+  if (scanf("%d", &id) != 1) {
+    return -1;
+  }
+  InventoryNode *n = find_item_by_id(memo->inventory, id);
+  inventory_display_item(n->data);
+  PRESS_ENTER_TO_CONTINUE();
+  return 0;
+};
 int search_inv_item_name(Memo *memo);

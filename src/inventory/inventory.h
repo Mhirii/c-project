@@ -52,8 +52,10 @@ InventoryItem *new_inventory_item(int id, char *name, double price,
                                   int supplier_id);
 void delete_inventory_item(InventoryItem *item);
 
+void inventory_display_item_minimal(InventoryItem item);
+void inventory_display_item(InventoryItem item);
 void inventory_display_all(InventoryNode *head, int minimal);
-void inventory_display_item(InventoryItem *item);
+void inventory_display_item_boring(InventoryItem *item);
 int check_id_availability(InventoryNode *head, int id);
 
 void check_low_stock(InventoryNode *head, Config *config);

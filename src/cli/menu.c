@@ -45,6 +45,9 @@ void inventory_management(Memo *m) {
     printf("1. Add Item\n");
     printf("2. Remove Item\n");
     printf("3. List Items\n");
+    printf("4. Update Item\n");
+    printf("5. Find Item By ID\n");
+    printf("6. Find Item By name\n");
     printf("q. Exit\n");
     printf("\n");
     printf("Enter your choice: ");
@@ -58,6 +61,14 @@ void inventory_management(Memo *m) {
       break;
     case '3':
       list_inv_items(m);
+      break;
+    case '4':
+      update_inv_item(m);
+      break;
+    case '5':
+      search_inv_item_id(m);
+      break;
+    case '6':
       break;
     case 'q':
       choice = 'q';

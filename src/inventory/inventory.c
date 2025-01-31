@@ -117,6 +117,34 @@ int delete_inventory_item_by_id(InventoryNode *head, int id) {
   return found;
 }
 
+void inventory_display_item_minimal(InventoryItem item) {
+  int stock_is_low = item.quantity < config.low_stock_threshold;
+  printf("\n╭─────────────────╮\n");
+  printf("\033[1m%s #%d\033[0m: %s%s\033[0m \n"
+         "   💰 $%.2f\033[0m \n"
+         "   📦 Qty: %d\033[0m \n"
+         "   ⚠️  Min: %d\033[0m \n"
+         "   🏢 Sup: %d\033[0m\n",
+         stock_is_low ? "⚠️" : "✨", item.id, stock_is_low ? "\033[1;31m" : "",
+         item.name, item.price, item.quantity, item.reorder_level,
+         item.supplier_id);
+  printf("╰─────────────────╯\n");
+}
+
+void inventory_display_item(InventoryItem item) {
+  int stock_is_low = item.quantity < config.low_stock_threshold;
+  printf("\n╭────────────────────────────────────╮\n");
+  printf("\033[1m%s #%d\033[0m: %s%s\033[0m \n"
+         "   💰 Price: \033[1;33m$%.2f\033[0m \n"
+         "   📦 Quantity: \033[1;32m%d\033[0m \n"
+         "   ⚠️  Reorder Level: \033[1;31m%d\033[0m \n"
+         "   🏢 Supplier ID: \033[1;35m%d\033[0m\n",
+         stock_is_low ? "⚠️" : "✨", item.id, stock_is_low ? "\033[1;31m" : "",
+         item.name, item.price, item.quantity, item.reorder_level,
+         item.supplier_id);
+  printf("╰────────────────────────────────────╯\n");
+}
+
 void inventory_display_all(InventoryNode *head, int minimal) {
   if (head == NULL) {
     LOG_ERR("Cannot display empty inventory");
@@ -127,18 +155,18 @@ void inventory_display_all(InventoryNode *head, int minimal) {
   while (current != NULL) {
     if (minimal == 0) {
       printf("\n---------------- ----------------\n\n");
-      inventory_display_item(&current->data);
+      inventory_display_item(current->data);
       if (current->next == NULL)
         printf("\n---------------- ----------------\n\n");
 
     } else {
-      printf("%d: %s\n", current->data.id, current->data.name);
+      inventory_display_item_minimal(current->data);
     }
     current = current->next;
   }
 }
 
-void inventory_display_item(InventoryItem *item) {
+void inventory_display_item_boring(InventoryItem *item) {
   if (item == NULL) {
     LOG_ERR("Cannot display NULL item");
     return;
