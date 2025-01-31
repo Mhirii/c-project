@@ -219,7 +219,7 @@ char *serialize_inventory_item(InventoryItem item) {
   return json;
 }
 
-int write_item(InventoryItem *item) {
+int write_item_json(InventoryItem *item, char *dirpath) {
 
   char filename[64];
   if (sprintf(filename, "%d.json", item->id) < 0) {
@@ -227,9 +227,8 @@ int write_item(InventoryItem *item) {
     return -1;
   }
 
-  char *path = malloc(strlen(config.data_path) + strlen("/inventory") +
-                      strlen(filename) + 2);
-  if (!sprintf(path, "%s/inventory/%s", config.data_path, filename)) {
+  char *path = malloc(strlen(dirpath) + strlen(filename) + 2);
+  if (!sprintf(path, "%s/%s", dirpath, filename)) {
     LOG_ERR("Error while path to save item");
     return -1;
   }
@@ -249,6 +248,16 @@ int write_item(InventoryItem *item) {
     LOG_ERR("Failed to write item file");
   }
   return result;
+}
+
+int write_item(InventoryItem *item) {
+  char *path = malloc(strlen(config.data_path) + strlen("/inventory") + 2);
+  if (!sprintf(path, "%s/inventory", config.data_path)) {
+    LOG_ERR("Error while path to save item");
+    return -1;
+  }
+
+  return write_item_json(item, path);
 }
 
 #endif

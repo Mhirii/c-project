@@ -43,6 +43,7 @@ int read_items(char *path, InventoryIndex *index);
 int write_items(char *path, InventoryIndex *index);
 int read_item(char *path, InventoryItem *item);
 int write_item(InventoryItem *item);
+int write_item_json(InventoryItem *item, char *dirpath);
 
 void delete_inventory(InventoryNode *head);
 int delete_inventory_item_by_id(InventoryNode *head, int id);
