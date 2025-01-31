@@ -6,6 +6,7 @@ CC = clang
 CFLAGS  = -g -Wall
 
 TARGET = main
+CLI = cli
 
 all: bin $(TARGET)
 
@@ -21,5 +22,8 @@ clean:
 
 run: $(TARGET)
 	./bin/$(TARGET)
+
+cli: src/$(CLI).c bin
+	$(CC) $(CFLAGS) -o bin/$(CLI) src/$(CLI).c $(LFLAGS)
 
 .PHONY: all clean
