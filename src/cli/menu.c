@@ -1,4 +1,5 @@
 #include "menu.h"
+#include "../api/api.h"
 #include "../lib/lib.h"
 #include "../memo/inv_supp.c"
 #include "input.h"
@@ -7,13 +8,13 @@
 void menu();
 void main_menu(Memo *memo) {
   char choice = '9';
-  while (choice != '0') {
+  while (choice != 'q') {
     printf("\n\n");
     printf("Main Menu\n");
     printf("---------\n");
     printf("1. Inventory Management\n");
     printf("2. Supplier Management\n");
-    printf("3. Exit\n");
+    printf("q. Exit\n");
     printf("\n");
     printf("Enter your choice: ");
     scanf("%c", &choice);
@@ -23,8 +24,9 @@ void main_menu(Memo *memo) {
       break;
     case '2':
       supplier_management(memo);
-    case '3':
-      choice = '0';
+      break;
+    case 'q':
+      choice = 'q';
       break;
     default:
       printf("Invalid choice\n");
@@ -36,33 +38,29 @@ void main_menu(Memo *memo) {
 void inventory_management(Memo *m) {
   InventoryIndex *index = m->inventory;
   char choice = '9';
-  while (choice != '0') {
+  while (choice != 'q') {
     printf("\n\n");
     printf("Inventory Management\n");
     printf("--------------------\n");
     printf("1. Add Item\n");
     printf("2. Remove Item\n");
     printf("3. List Items\n");
-    printf("4. Exit\n");
+    printf("q. Exit\n");
     printf("\n");
     printf("Enter your choice: ");
     scanf(" %c", &choice);
     switch (choice) {
     case '1':
-      append_item(index, *read_inventory_item());
+      add_inv_item(m);
       break;
     case '2':
-      printf("Enter item id: ");
-      int id;
-      scanf("%d", &id);
-      del_item(index, id);
+      del_inv_item(m);
       break;
     case '3':
-      inventory_display_all(index->head, 0);
-      PRESS_ENTER_TO_CONTINUE();
+      list_inv_items(m);
       break;
-    case '4':
-      choice = '0';
+    case 'q':
+      choice = 'q';
       break;
     default:
       printf("Invalid choice\n");
@@ -74,7 +72,7 @@ void inventory_management(Memo *m) {
 void supplier_management(Memo *m) {
   SupplierList *list = m->suppliers;
   char choice = '9';
-  while (choice != '0') {
+  while (choice != 'q') {
     printf("\n\n");
     printf("Supplier Management\n");
     printf("--------------------\n");
@@ -82,38 +80,25 @@ void supplier_management(Memo *m) {
     printf("2. Remove Supplier\n");
     printf("3. List Suppliers\n");
     printf("4. Supplier Inventory\n");
-    printf("5. Exit\n");
+    printf("q. Exit\n");
     printf("\n");
     printf("Enter your choice: ");
     scanf(" %c", &choice);
     switch (choice) {
     case '1':
-      append_supplier(list, *read_supplier());
+      add_supp(m);
       break;
     case '2':
-      printf("Enter supplier id: ");
-      int id;
-      scanf("%d", &id);
-      delete_supplier(list, id);
+      del_supp(m);
       break;
     case '3':
-      supplier_display_all(list->head, 0);
-      PRESS_ENTER_TO_CONTINUE();
+      list_supp(m);
       break;
     case '4':
-      printf("Enter item id: ");
-      int search_id;
-      scanf("%d", &search_id);
-      InventoryNode *n = get_products_by_supplier(m, search_id);
-      if (n != NULL) {
-        inventory_display_all(n, 0);
-      } else {
-        printf("No products found\n");
-      }
-      PRESS_ENTER_TO_CONTINUE();
+      list_supplier_items(m);
       break;
-    case '5':
-      choice = '0';
+    case 'q':
+      choice = 'q';
       break;
     default:
       printf("Invalid choice\n");

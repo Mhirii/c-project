@@ -13,4 +13,6 @@ typedef struct Memo{
 void memo_init(Memo *memo);
 void memo_free(Memo *memo);
 
+InventoryNode *get_products_by_supplier(Memo *m, int supplier_id);
+
 #endif

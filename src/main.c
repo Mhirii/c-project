@@ -1,4 +1,7 @@
 
+#include "api/api.h"
+#include "api/api_inv.c"
+#include "api/api_supp.c"
 #include "cli/input.c"
 #include "cli/menu.c"
 #include "cli/menu.h"
