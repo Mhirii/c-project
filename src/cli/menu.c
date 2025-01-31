@@ -99,7 +99,7 @@ void supplier_management(Memo *m) {
       append_supplier(list, *read_supplier());
       break;
     case '2':
-      printf("Enter item id: ");
+      printf("Enter supplier id: ");
       int id;
       scanf("%d", &id);
       delete_supplier(list, id);
