@@ -1,3 +1,4 @@
+
 #include "cli/input.c"
 #include "cli/menu.c"
 #include "cli/menu.h"
@@ -16,6 +17,7 @@
 #include "json/json.c"
 
 int main() {
+
   LOG(1, "Starting program");
   Config *config = malloc(sizeof(Config));
   load_config("config.json");
@@ -23,7 +25,6 @@ int main() {
 
   Memo *memo = malloc(sizeof(Memo));
   memo_init(memo);
-  inventory_display_all(memo->inventory->head, 0);
 
   main_menu(memo);
 

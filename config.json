@@ -2,5 +2,6 @@
 	"low_stock_threshold": 10,
 	"auto_reorder": 3,
 	"log_file_path": "default.log",
-	"report_generation_frequency": 19
+	"report_generation_frequency": 19,
+	"log_level": 2
 }

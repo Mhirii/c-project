@@ -90,10 +90,12 @@ int print_log(struct Log *log) {
   }
 
   fprintf(log_file, "%s\n", log_line);
-  if (log->level >= 3) {
-    fprintf(stderr, "%s\n", colored_log_line);
-  } else {
-    printf("%s\n", colored_log_line);
+  if (log->level >= config.log_level) {
+    if (log->level >= 3) {
+      fprintf(stderr, "%s\n", colored_log_line);
+    } else {
+      printf("%s\n", colored_log_line);
+    }
   }
 
   fclose(log_file);

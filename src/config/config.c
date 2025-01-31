@@ -54,6 +54,10 @@ int parse_config(const char **buffer, Config *config) {
           (!parse_json_number(buffer, &config->report_generation_frequency)),
           "Failed to parse report_generation_frequency");
 
+    } else if (strcmp(key, "log_level") == 0) {
+      CHECK_ERROR((!parse_json_number(buffer, &config->log_level)),
+                  "Failed to parse log_level");
+
     } else {
       LOG_ERR("Unknown key: %s, SKIPPING", key);
     }
