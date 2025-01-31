@@ -180,6 +180,11 @@ InventoryNode *find_item_by_id(InventoryIndex *index, int id) {
 
 InventoryNode **search_items_by_name(InventoryIndex *index, char *name) {
   InventoryNode **found = malloc(sizeof(InventoryNode *) * MAX_FOUND_ITEMS);
+  if (found == NULL) {
+    return NULL;
+  }
+  memset(found, 0, sizeof(InventoryNode *) * MAX_FOUND_ITEMS);
+
   InventoryNode *current = index->head;
   int found_count = 0;
 
@@ -192,6 +197,11 @@ InventoryNode **search_items_by_name(InventoryIndex *index, char *name) {
       }
     }
     current = current->next;
+  }
+
+  if (found_count == 0) {
+    free(found);
+    return NULL;
   }
   return found;
 }

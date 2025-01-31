@@ -69,6 +69,7 @@ void inventory_management(Memo *m) {
       search_inv_item_id(m);
       break;
     case '6':
+      search_inv_item_name(m);
       break;
     case 'q':
       choice = 'q';

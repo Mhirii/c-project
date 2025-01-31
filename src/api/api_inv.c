@@ -2,6 +2,7 @@
 #include "../lib/macros.h"
 #include "api.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int add_inv_item(Memo *memo) {
   return append_item(memo->inventory, *read_inventory_item());
@@ -43,4 +44,26 @@ int search_inv_item_id(Memo *memo) {
   PRESS_ENTER_TO_CONTINUE();
   return 0;
 };
-int search_inv_item_name(Memo *memo);
+int search_inv_item_name(Memo *memo) {
+  char name[MAX_STRING_LENGTH];
+  printf("Enter item name: ");
+  if (scanf("%s", name) != 1) {
+    return -1;
+  }
+  InventoryNode **nodes = search_items_by_name(memo->inventory, name);
+  if (nodes == NULL) {
+    printf("No items found\n");
+    PRESS_ENTER_TO_CONTINUE();
+    return -1;
+  }
+
+  int i = 0;
+  while (nodes[i] != NULL) {
+    inventory_display_item_minimal(nodes[i]->data);
+    i++;
+  }
+  free(nodes);
+
+  PRESS_ENTER_TO_CONTINUE();
+  return 0;
+};
