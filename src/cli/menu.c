@@ -91,7 +91,10 @@ void supplier_management(Memo *m) {
     printf("1. Add Supplier\n");
     printf("2. Remove Supplier\n");
     printf("3. List Suppliers\n");
-    printf("4. Supplier Inventory\n");
+    printf("4. Update Supplier\n");
+    printf("5. Find Supplier By ID\n");
+    printf("6. Find Supplier By name\n");
+    printf("7. Supplier Inventory\n");
     printf("q. Exit\n");
     printf("\n");
     printf("Enter your choice: ");
@@ -107,6 +110,15 @@ void supplier_management(Memo *m) {
       list_supp(m);
       break;
     case '4':
+      update_supp(m);
+      break;
+    case '5':
+      search_supplier_id(m);
+      break;
+    case '6':
+      search_supplier_name(m);
+      break;
+    case '7':
       list_supplier_items(m);
       break;
     case 'q':

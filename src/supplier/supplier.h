@@ -29,6 +29,7 @@ int free_supplier_list(SupplierList *list);
 int delete_supplier(SupplierList *list, int id);
 int update_supplier(SupplierList *list, int id, Supplier supp);
 SupplierNode *find_supp_by_id(SupplierList *list, int id);
+SupplierNode **find_supp_by_name(SupplierList *list, char *name);
 
 SupplierList *read_supplier_list();
 

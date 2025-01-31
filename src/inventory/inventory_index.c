@@ -4,9 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ALLOWED_MATCH_ERRS_RATIO 4
-#define MAX_FOUND_ITEMS 16
-
 int comp_name(InventoryItem *item, char *name) {
 
   if (item == NULL || name == NULL) {

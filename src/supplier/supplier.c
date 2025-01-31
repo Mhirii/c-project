@@ -7,6 +7,33 @@
 #include "util.c"
 #include <stdlib.h>
 
+int name_match(char *str1, char *str2) {
+  int len1 = strlen(str1);
+  int len2 = strlen(str2);
+  int min_len = len2 < len1 ? len2 : len1;
+  int max_errors = min_len / ALLOWED_MATCH_ERRS_RATIO;
+  int errors = 0;
+
+  for (int i = 0; i < min_len; i++) {
+    if (str1[i] != str2[i]) {
+      errors++;
+    }
+    if (errors > max_errors) {
+      return 0;
+    }
+  }
+  return len2 <= len1;
+}
+
+int comp_supp_name(Supplier *supp, char *name) {
+  if (supp == NULL || name == NULL) {
+    return 0;
+  }
+
+  return name_match(supp->first_name, name) ||
+         name_match(supp->last_name, name);
+}
+
 int validate_supp_string(char *str) {
   if (str == NULL || strlen(str) > MAX_STRING_LENGTH) {
     LOG_ERR("String is not valid");
@@ -237,4 +264,33 @@ void supplier_display_all(SupplierNode *head, int minimal) {
     }
     current = current->next;
   }
+}
+
+SupplierNode **find_supp_by_name(SupplierList *list, char *name) {
+
+  SupplierNode **found = malloc(sizeof(SupplierNode *) * MAX_FOUND_ITEMS);
+  if (found == NULL) {
+    return NULL;
+  }
+  memset(found, 0, sizeof(SupplierNode *) * MAX_FOUND_ITEMS);
+
+  SupplierNode *current = list->head;
+  int found_count = 0;
+
+  while (current != NULL) {
+    if (comp_supp_name(&(current->supplier), name)) {
+      found[found_count] = current;
+      found_count++;
+      if (found_count == MAX_FOUND_ITEMS) {
+        break;
+      }
+    }
+    current = current->next;
+  }
+
+  if (found_count == 0) {
+    free(found);
+    return NULL;
+  }
+  return found;
 }
