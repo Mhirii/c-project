@@ -2,6 +2,7 @@
 #define REPORT_H
 
 #include "../inventory/inventory.h"
+#include "../memo/memo.h"
 #include <stdio.h>
 #include "../lib/lib.h"
 
@@ -34,5 +35,21 @@ int write_report_txt_line(FILE *fp, InventoryItem *item);
  * @return 0 on success, -1 on error
  */
 int write_report_files(InventoryItem **items);
+
+
+/**
+ * @brief Generates an HTML page with the inventory items
+ * @param items Array of inventory items to include in the HTML page
+ * @param count Number of items in the array
+ * @return Pointer to generated HTML string on success, NULL on failure
+ */
+char *generate_html_page(InventoryItem **items, int count);
+
+/**
+ * @brief Generates inventory reorder reports in text and JSON formats
+ * @param memo Pointer to the Memo structure containing inventory data
+ * @return 0 on success, -1 on failure
+ */
+int write_report(Memo *memo);
 
 #endif

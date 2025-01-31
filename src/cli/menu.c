@@ -1,5 +1,6 @@
 #include "menu.h"
 #include "../api/api.h"
+#include "../automation/gen_data.c"
 #include "../lib/lib.h"
 #include "../memo/inv_supp.c"
 #include "input.h"
@@ -14,6 +15,7 @@ void main_menu(Memo *memo) {
     printf("---------\n");
     printf("1. Inventory Management\n");
     printf("2. Supplier Management\n");
+    printf("3. Generate Fake Data\n");
     printf("q. Exit\n");
     printf("\n");
     printf("Enter your choice: ");
@@ -24,6 +26,9 @@ void main_menu(Memo *memo) {
       break;
     case '2':
       supplier_management(memo);
+      break;
+    case '3':
+      gen_fake_data(memo);
       break;
     case 'q':
       choice = 'q';

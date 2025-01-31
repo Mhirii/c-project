@@ -67,7 +67,7 @@ char *get_data_directory() {
 char *get_full_path(const char *filename) {
   char *data_dir = get_data_directory();
   if (data_dir == NULL) {
-    fprintf(stderr, "Error: Could not determine data directory.\n");
+    LOG_ERR("Error: Could not determine data directory.\n");
     return NULL;
   }
 
@@ -78,7 +78,7 @@ char *get_full_path(const char *filename) {
   char *full_path =
       malloc(strlen(app_dir) + strlen(filename) + 2); // +2 => '/' and '\0'
   if (full_path == NULL) {
-    fprintf(stderr, "Error: Memory allocation failed.\n");
+    LOG_ERR("Error: Memory allocation failed.\n");
     return NULL;
   }
   sprintf(full_path, "%s/%s", app_dir, filename);
@@ -103,7 +103,7 @@ void write_to_file(const char *filename, const char *content) {
 
   FILE *file = fopen(full_path, "w");
   if (file == NULL) {
-    fprintf(stderr, "Error: Could not open file for writing.\n");
+    LOG_ERR("Error: Could not open file for writing.\n");
     free(full_path);
     return;
   }
@@ -182,7 +182,7 @@ int create_data_dir() {
   return 0;
 }
 
-int create_dir(const char *dirname) {
+int create_dir_in_data(const char *dirname) {
   if (!data_dir_has_dir(dirname)) {
     char *dir_path = malloc(strlen(config.data_path) + strlen(dirname) + 2);
     sprintf(dir_path, "%s/%s", config.data_path, dirname);

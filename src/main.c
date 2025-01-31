@@ -15,6 +15,8 @@
 #include "lib/log.h"
 #include "memo/memo.c"
 #include "memo/memo.h"
+#include "report/report.c"
+#include "report/report.h"
 #include "supplier/supplier.c"
 #include "supplier/supplier.h"
 #include "json/json.c"
@@ -26,6 +28,11 @@ int main() {
 
   Memo *memo = malloc(sizeof(Memo));
   memo_init(memo);
+
+  if (write_report(memo) == -1) {
+    LOG_ERR("Error writing report");
+    return -1;
+  }
 
   main_menu(memo);
 

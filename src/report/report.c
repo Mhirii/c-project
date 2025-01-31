@@ -1,23 +1,14 @@
 #include "report.h"
 #include "../inventory/inventory.h"
+#include "html.c"
+#include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-/**
- * @brief Checks if an inventory item needs to be reordered
- * @param node Pointer to the inventory node to check
- * @return 1 if item quantity is at or below reorder level, 0 otherwise
- */
 int should_report_item(InventoryNode *node) {
   return (node->data.quantity <= node->data.reorder_level);
 }
 
-/**
- * @brief Collects inventory items that need to be reordered
- * @param node Pointer to the first node in the inventory list
- * @return NULL-terminated array of pointers to reportable items, or NULL on
- * error
- */
 InventoryItem **collect_reportable_items(InventoryNode *node) {
   if (!node) {
     return NULL;
@@ -51,29 +42,56 @@ InventoryItem **collect_reportable_items(InventoryNode *node) {
   return items;
 }
 
-/**
- * @brief Writes a single inventory item to the report file
- * @param fp File pointer to write to
- * @param item Pointer to inventory item to write
- * @return Number of characters written, or negative on error
- */
 int write_report_txt_line(FILE *fp, InventoryItem *item) {
-  return fprintf(fp,
-                 "id=%d\tname=%s\tquantity=%d\treorder_level%d\tneedeed=%d\n",
-                 item->id, item->name, item->quantity, item->reorder_level,
-                 item->reorder_level - item->quantity);
+  int needed = item->reorder_level - item->quantity;
+  return fprintf(
+      fp,
+      "id=%d\tname=%s\tquantity=%d\treorder_level=%d\tneeded=%d\tcontact=%d\n",
+      item->id, item->name, item->quantity, item->reorder_level, needed,
+      item->supplier_id);
 }
 
-/**
- * @brief Writes reorder report files in text and JSON format
- * @param items NULL-terminated array of pointers to inventory items
- * @return 0 on success, -1 on error
- */
+int empty_dir(char *path) {
+  DIR *dir;
+  struct dirent *entry;
+
+  dir = opendir(path);
+  if (dir == NULL) {
+    LOG_ERR("Unable to open directory at %s", path);
+    return -1;
+  }
+
+  while ((entry = readdir(dir)) != NULL) {
+    char *full_path = malloc(strlen(path) + strlen(entry->d_name) + 2);
+    if (full_path == NULL) {
+      LOG_ERR("Failed to allocate memory for full path");
+      continue;
+    }
+
+    sprintf(full_path, "%s/%s", path, entry->d_name);
+    if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+      if (remove(full_path) != 0) {
+        LOG_ERR("Failed to delete file: %s", full_path);
+      }
+    }
+    free(full_path);
+  }
+
+  closedir(dir);
+
+  return 0;
+}
+
 int write_report_files(InventoryItem **items) {
 
-  create_dir("report");
+  create_directory_if_not_exists("report");
+  empty_dir("report");
+
+  create_file("report", "reorder.txt");
+
   FILE *fp = fopen("report/reorder.txt", "w");
   if (!fp) {
+    LOG_ERR("Failed to open file");
     return -1;
   }
 
@@ -84,6 +102,20 @@ int write_report_files(InventoryItem **items) {
     i++;
   }
 
+  char *html = generate_html_page(items, i);
+  if (html) {
+    create_file("report", "reorder.html");
+    write_file("report/reorder.html", html);
+    free(html);
+  } else {
+    LOG_ERR("Failed to generate HTML page");
+  }
+
   fclose(fp);
   return 0;
+}
+
+int write_report(Memo *memo) {
+  InventoryItem **items = collect_reportable_items(memo->inventory->head);
+  return write_report_files(items);
 }

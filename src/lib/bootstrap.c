@@ -1,5 +1,6 @@
 
 #include "bootstrap.h"
+#include "../report/report.h"
 #include "fs/fs.h"
 #include "log.h"
 #include <stdlib.h>
@@ -9,7 +10,7 @@ int setup_data_files() {
 
   const char *dirs[] = {"inventory", "order", "supplier"};
   for (int i = 0; i < sizeof(dirs) / sizeof(dirs[0]); i++) {
-    if (create_dir(dirs[i])) {
+    if (create_dir_in_data(dirs[i])) {
 
       LOG(1, "%s dir created", dirs[i]);
     }

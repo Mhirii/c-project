@@ -42,7 +42,7 @@ int create_data_dir();
  * @param dirname Name of directory to create
  * @return 1 if directory was created, 0 if it already existed
  */
-int create_dir(const char *dirname);
+int create_dir_in_data(const char *dirname);
 
 /**
  * @brief Creates a file within a directory
