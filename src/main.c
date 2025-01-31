@@ -20,11 +20,7 @@
 #include "json/json.c"
 
 int main() {
-
   LOG(1, "Starting program");
-  Config *config = malloc(sizeof(Config));
-  load_config("config.json");
-  LOG(1, "Loaded Config");
 
   bootstrap();
 
@@ -33,6 +29,5 @@ int main() {
 
   main_menu(memo);
 
-  free(config);
   return 0;
 }

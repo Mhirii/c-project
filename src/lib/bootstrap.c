@@ -30,6 +30,10 @@ int setup_data_files() {
 }
 
 int bootstrap() {
+
+  load_config("config.json");
+  LOG(1, "Loaded Config");
+
   if (setup_data_files() == -1)
     return -1;
 
