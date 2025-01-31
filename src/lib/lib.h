@@ -7,5 +7,5 @@
 #include "vars.h"
 #include "macros.h"
 #include "fs/fs.h"
-
+#include "bootstrap.h"
 #endif

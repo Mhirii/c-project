@@ -26,6 +26,8 @@ int main() {
   load_config("config.json");
   LOG(1, "Loaded Config");
 
+  bootstrap();
+
   Memo *memo = malloc(sizeof(Memo));
   memo_init(memo);
 

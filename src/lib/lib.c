@@ -3,6 +3,7 @@
 
 #include "lib.h"
 
+#include "bootstrap.c"
 #include "fs/fs.c"
 #include "io.c"
 #include "log.c"

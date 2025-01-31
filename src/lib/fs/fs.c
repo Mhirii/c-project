@@ -1,8 +1,20 @@
+#include "../log.h"
 #include "../vars.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#include "../../config/config.h"
+#include "../log.h"
+#include "dirent.h"
+#include "time.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifndef _WIN32
 #include <sys/stat.h> // mkdir on POSIX
+#endif
 
 #ifdef _WIN32
 #include <direct.h> // _mkdir on Windows   yuck :v
@@ -102,4 +114,111 @@ void write_to_file(const char *filename, const char *content) {
   printf("File saved to: %s\n", full_path);
 
   free(full_path);
+}
+
+int create_file_if_not_exists(const char *path) {
+  FILE *file = fopen(path, "a");
+  if (file == NULL) {
+    LOG_ERR("Error: Could not open file for writing.\n");
+    return 0;
+  }
+
+  fclose(file);
+
+  LOG(0, "File created at: %s\n", path);
+
+  return 1;
+}
+
+int data_dir_exists() {
+  char *data_dir = config.data_path;
+  DIR *dir = opendir(data_dir);
+  if (dir == NULL) {
+    return 0;
+  }
+  closedir(dir);
+  return 1;
+}
+
+int data_dir_has_dir(const char *dirname) {
+  char *data_dir = config.data_path;
+  DIR *dir = opendir(data_dir);
+  if (dir == NULL) {
+    return 0;
+  }
+  struct dirent *ent;
+  while ((ent = readdir(dir)) != NULL) {
+    if (strcmp(ent->d_name, dirname) == 0) {
+      closedir(dir);
+      return 1;
+    }
+  }
+  closedir(dir);
+  return 0;
+}
+
+int dir_has_file(char *dir_path, char *filename) {
+  DIR *dir = opendir(dir_path);
+  if (dir == NULL) {
+    LOG_ERR("dir was null");
+    return 0;
+  }
+  struct dirent *ent;
+  while ((ent = readdir(dir)) != NULL) {
+    if (strcmp(ent->d_name, filename) == 0) {
+      closedir(dir);
+      return 1;
+    }
+  }
+  closedir(dir);
+  return 0;
+}
+
+int create_data_dir() {
+  if (!data_dir_exists()) {
+    create_directory_if_not_exists(config.data_path);
+    return 1;
+  }
+  return 0;
+}
+
+int create_dir(const char *dirname) {
+  if (!data_dir_has_dir(dirname)) {
+    char *dir_path = malloc(strlen(config.data_path) + strlen(dirname) + 2);
+    sprintf(dir_path, "%s/%s", config.data_path, dirname);
+    create_directory_if_not_exists(dir_path);
+    free(dir_path);
+    return 1;
+  }
+  return 0;
+}
+
+int create_file(char *dirname, char *filename) {
+  if (!dir_has_file(dirname, filename)) {
+
+    char *file_path = malloc(strlen(dirname) + strlen(filename) + 2);
+    sprintf(file_path, "%s/%s", dirname, filename);
+    write_to_file(file_path, "\n");
+    create_file_if_not_exists(file_path);
+
+    free(file_path);
+    return 1;
+  }
+  return 0;
+}
+
+char *create_path(const char *str1, const char *str2) {
+  if (!str1 || !str2)
+    return NULL;
+
+  size_t len1 = strlen(str1);
+  size_t len2 = strlen(str2);
+  size_t total_len = len1 + len2 + 2;
+
+  char *result = malloc(total_len);
+  if (!result)
+    return NULL;
+
+  snprintf(result, total_len, "%s/%s", str1, str2);
+  return result;
 }
