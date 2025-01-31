@@ -5,6 +5,7 @@
 #include "io.h"
 #include "log.h"
 #include "vars.h"
+#include "macros.h"
 #include "fs/fs.h"
 
 #endif

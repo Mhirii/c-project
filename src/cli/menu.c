@@ -4,14 +4,6 @@
 #include "input.h"
 #include <stdio.h>
 
-#define PRESS_ENTER_TO_CONTINUE()                                              \
-  do {                                                                         \
-    printf("\nPress enter to continue...");                                    \
-    while (getchar() != '\n')                                                  \
-      ;                                                                        \
-    getchar();                                                                 \
-  } while (0)
-
 void menu();
 void main_menu(Memo *memo) {
   char choice = '9';
