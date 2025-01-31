@@ -154,11 +154,7 @@ void inventory_display_all(InventoryNode *head, int minimal) {
   InventoryNode *current = head;
   while (current != NULL) {
     if (minimal == 0) {
-      printf("\n---------------- ----------------\n\n");
       inventory_display_item(current->data);
-      if (current->next == NULL)
-        printf("\n---------------- ----------------\n\n");
-
     } else {
       inventory_display_item_minimal(current->data);
     }

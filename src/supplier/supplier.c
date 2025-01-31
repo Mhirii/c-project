@@ -212,11 +212,13 @@ void display_supplier(Supplier *supp) {
     return;
   }
 
-  printf("ID:            %d\n", supp->id);
-  printf("First Name:    %s\n", supp->first_name);
-  printf("Last Name:     %s\n", supp->last_name);
-  printf("Email:         %s\n", supp->email);
-  printf("Phone:         %s\n", supp->phone);
+  printf("\n╭────────────────────────────────────╮\n");
+  printf("\033[1m%s #%d\033[0m: %s %s\033[0m \n"
+         "   📧 Email: \033[1;36m%s\033[0m \n"
+         "   📞 Phone: \033[1;32m%s\033[0m\n",
+         "👤", supp->id, supp->first_name, supp->last_name, supp->email,
+         supp->phone);
+  printf("╰────────────────────────────────────╯\n");
 }
 
 void supplier_display_all(SupplierNode *head, int minimal) {
@@ -228,11 +230,7 @@ void supplier_display_all(SupplierNode *head, int minimal) {
   SupplierNode *current = head;
   while (current != NULL) {
     if (minimal == 0) {
-      printf("\n---------------- ----------------\n\n");
       display_supplier(&current->supplier);
-      if (current->next == NULL)
-        printf("\n---------------- ----------------\n\n");
-
     } else {
       printf("%d: %s %s\n", current->supplier.id, current->supplier.first_name,
              current->supplier.last_name);
