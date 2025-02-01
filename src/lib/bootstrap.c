@@ -17,6 +17,7 @@ int setup_data_files() {
 
     char *path = create_path(config.data_path, dirs[i]);
     if (path) {
+
       if (create_file(path, "metadata")) {
         LOG(1, "metadata file created at %s", path);
       }

@@ -37,6 +37,27 @@ void print_usage() {
          "all suppliers\033[0m\n");
 }
 
+// Parse command line arguments for inventory items
+void parse_inventory_args(int argc, char *argv[], char **name, double *price,
+                          int *quantity, int *reorder_level, int *supplier_id,
+                          int *id) {
+  for (int i = 3; i < argc; i += 2) {
+    if (strcmp(argv[i], "--id") == 0) {
+      *id = atoi(argv[i + 1]);
+    } else if (strcmp(argv[i], "-n") == 0) {
+      *name = argv[i + 1];
+    } else if (strcmp(argv[i], "-p") == 0) {
+      *price = atof(argv[i + 1]);
+    } else if (strcmp(argv[i], "-q") == 0) {
+      *quantity = atoi(argv[i + 1]);
+    } else if (strcmp(argv[i], "-rs") == 0) {
+      *reorder_level = atoi(argv[i + 1]);
+    } else if (strcmp(argv[i], "-sp") == 0) {
+      *supplier_id = atoi(argv[i + 1]);
+    }
+  }
+}
+
 int main(int argc, char *argv[]) {
   if (argc < 2) {
     print_usage();
@@ -55,29 +76,21 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
+  // -i
   if (strcmp(argv[1], "-i") == 0) {
+    // -i ls
     if (argc >= 3 && strcmp(argv[2], "ls") == 0) {
       inventory_display_all(memo->inventory->head, 0);
+      // -i a
     } else if (argc >= 11 && strcmp(argv[2], "a") == 0) {
       char *name = NULL;
       double price = -1;
       int quantity = -1, reorder_level = -1, supplier_id = -1;
 
-      for (int i = 3; i < argc; i += 2) {
-        if (strcmp(argv[i], "-n") == 0) {
-          name = argv[i + 1];
-        } else if (strcmp(argv[i], "-p") == 0) {
-          price = atof(argv[i + 1]);
-        } else if (strcmp(argv[i], "-q") == 0) {
-          quantity = atoi(argv[i + 1]);
-        } else if (strcmp(argv[i], "-rs") == 0) {
-          reorder_level = atoi(argv[i + 1]);
-        } else if (strcmp(argv[i], "-sp") == 0) {
-          supplier_id = atoi(argv[i + 1]);
-        }
-      }
+      parse_inventory_args(argc, argv, &name, &price, &quantity, &reorder_level,
+                           &supplier_id, NULL);
 
-      if (name && price >= 0 && quantity >= 0 && reorder_level >= 0 &&
+      if (name && price > 0 && quantity > 0 && reorder_level > 0 &&
           supplier_id >= 0) {
 
         InventoryItem *item = new_inventory_item(0, name, price, quantity,
@@ -87,30 +100,17 @@ int main(int argc, char *argv[]) {
         LOG_ERR("Invalid arguments for adding an item.\n");
         print_usage();
       }
+      // -i u
     } else if (argc >= 11 && strcmp(argv[2], "u") == 0) {
       int id = -1;
       char *name = NULL;
       double price = -1;
       int quantity = -1, reorder_level = -1, supplier_id = -1;
 
-      for (int i = 3; i < argc; i += 2) {
-        if (strcmp(argv[i], "--id") == 0) {
-          id = atoi(argv[i + 1]);
-        } else if (strcmp(argv[i], "-n") == 0) {
-          name = argv[i + 1];
-        } else if (strcmp(argv[i], "-p") == 0) {
-          price = atof(argv[i + 1]);
-        } else if (strcmp(argv[i], "-q") == 0) {
-          quantity = atoi(argv[i + 1]);
-        } else if (strcmp(argv[i], "-rs") == 0) {
-          reorder_level = atoi(argv[i + 1]);
-        } else if (strcmp(argv[i], "-sp") == 0) {
-          supplier_id = atoi(argv[i + 1]);
-        }
-      }
+      parse_inventory_args(argc, argv, &name, &price, &quantity, &reorder_level,
+                           &supplier_id, &id);
 
       if (id >= 0) {
-
         InventoryItem *item = new_inventory_item(0, name, price, quantity,
                                                  reorder_level, supplier_id);
         update_item(memo->inventory, id, *item);
@@ -118,6 +118,7 @@ int main(int argc, char *argv[]) {
         LOG_ERR("Invalid arguments for updating an item.\n");
         print_usage();
       }
+      // -i d
     } else if (argc >= 4 && strcmp(argv[2], "d") == 0) {
       int id = atoi(argv[3]);
       del_item(memo->inventory, id);
@@ -125,9 +126,12 @@ int main(int argc, char *argv[]) {
       LOG_ERR("Invalid inventory command.\n");
       print_usage();
     }
+
+    // -s
   } else if (strcmp(argv[1], "-s") == 0) {
+    // -s ls
     if (argc >= 3 && strcmp(argv[2], "ls") == 0) {
-      list_supp(memo);
+      supplier_display_all(memo->suppliers->head, 0);
     } else {
       LOG_ERR("Invalid supplier command.\n");
       print_usage();

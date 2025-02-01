@@ -103,7 +103,8 @@ void write_to_file(const char *filename, const char *content) {
 
   FILE *file = fopen(full_path, "w");
   if (file == NULL) {
-    LOG_ERR("Error: Could not open file for writing.\n");
+    LOG(2, "Error: Could not open file at %s for writing, FILE IS NULL.\n",
+        full_path);
     free(full_path);
     return;
   }

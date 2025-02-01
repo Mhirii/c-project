@@ -87,8 +87,6 @@ int write_report_files(InventoryItem **items) {
   create_directory_if_not_exists("report");
   empty_dir("report");
 
-  create_file("report", "reorder.txt");
-
   FILE *fp = fopen("report/reorder.txt", "w");
   if (!fp) {
     LOG_ERR("Failed to open file");
@@ -104,7 +102,6 @@ int write_report_files(InventoryItem **items) {
 
   char *html = generate_html_page(items, i);
   if (html) {
-    create_file("report", "reorder.html");
     write_file("report/reorder.html", html);
     free(html);
   } else {
